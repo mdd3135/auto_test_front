@@ -1,0 +1,39 @@
+Date : 2023-12-30 21:57:42
+Directory : /var/home/mdd/文档/毕业设计/auto_test_front/lib
+Total : 11 files,  856 codes, 2 comments, 66 blanks, all 924 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Dart     |         11 |        856 |          2 |         66 |        924 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                   | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                      |         11 |        856 |          2 |         66 |        924 |
+| . (Files)                                                              |          2 |        129 |          0 |         18 |        147 |
+| entity                                                                 |          1 |         17 |          0 |          2 |         19 |
+| page                                                                   |          7 |        537 |          2 |         40 |        579 |
+| widget                                                                 |          1 |        173 |          0 |          6 |        179 |
++------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                               | language | code       | comment    | blank      | total      |
++------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| /var/home/mdd/文档/毕业设计/auto_test_front/lib/entity/user.dart             | Dart     |         17 |          0 |          2 |         19 |
+| /var/home/mdd/文档/毕业设计/auto_test_front/lib/main.dart                    | Dart     |        117 |          0 |         17 |        134 |
+| /var/home/mdd/文档/毕业设计/auto_test_front/lib/page/homePage.dart           | Dart     |        149 |          0 |         11 |        160 |
+| /var/home/mdd/文档/毕业设计/auto_test_front/lib/page/loginPage.dart          | Dart     |        199 |          2 |          7 |        208 |
+| /var/home/mdd/文档/毕业设计/auto_test_front/lib/page/myPage.dart             | Dart     |         12 |          0 |          4 |         16 |
+| /var/home/mdd/文档/毕业设计/auto_test_front/lib/page/problemSetPage.dart     | Dart     |         12 |          0 |          3 |         15 |
+| /var/home/mdd/文档/毕业设计/auto_test_front/lib/page/settingPage.dart        | Dart     |        141 |          0 |          8 |        149 |
+| /var/home/mdd/文档/毕业设计/auto_test_front/lib/page/stuManPage.dart         | Dart     |         12 |          0 |          4 |         16 |
+| /var/home/mdd/文档/毕业设计/auto_test_front/lib/page/testPage.dart           | Dart     |         12 |          0 |          3 |         15 |
+| /var/home/mdd/文档/毕业设计/auto_test_front/lib/status.dart                  | Dart     |         12 |          0 |          1 |         13 |
+| /var/home/mdd/文档/毕业设计/auto_test_front/lib/widget/themeDropdownbtn.dart | Dart     |        173 |          0 |          6 |        179 |
+| Total                                                                  |          |        856 |          2 |         66 |        924 |
++------------------------------------------------------------------------+----------+------------+------------+------------+------------+
