@@ -6,7 +6,14 @@ class User {
   String classroom;
   int type;
 
-  User(this.id, this.name, this.number, this.pwd, this.classroom, this.type);
+  User(
+    this.id,
+    this.name,
+    this.number,
+    this.pwd,
+    this.classroom,
+    this.type,
+  );
   static User objToUser(Map<String, dynamic> map) {
     return User(
       map["id"],

@@ -54,7 +54,6 @@ class _StuManPageState extends State<StuManPage> {
     return Stack(
       alignment: Alignment.topCenter,
       children: [
-        Container(),
         Positioned(
           top: 80,
           child: Container(
