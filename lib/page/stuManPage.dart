@@ -6,6 +6,7 @@ import 'package:auto_test_front/entity/user.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/classroomModDialog.dart';
 import 'package:auto_test_front/widget/numberModDialog.dart';
+import 'package:auto_test_front/widget/resetPwdDialog.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:excel/excel.dart' as excel_lib;
 import 'package:file_picker/file_picker.dart';
@@ -581,50 +582,10 @@ class _StuManPageState extends State<StuManPage> {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: const Text(
-            "提示",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          content: const Text(
-            "是否要重置该学生密码",
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 20,
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-              child: const Text(
-                "取消",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-              child: const Text(
-                "确定",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
-              ),
-            )
-          ],
-        );
+        return const ResetPwdDialog();
       },
     ).then((value) async {
-      if (value == false) {
+      if (value == null || value == false) {
         return;
       }
       BotToast.showLoading();

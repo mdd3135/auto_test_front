@@ -184,23 +184,33 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
             ),
           ),
           DataCell(
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return onDetailPressed(itemBank);
-                    },
+            Row(
+              children: [
+                TextButton(
+                  onPressed: () {
+                    onDeletePressed(itemBank);
+                  },
+                  child: const Text(
+                    "删除",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                    ),
                   ),
-                );
-              },
-              child: const Text(
-                "查看",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
                 ),
-              ),
+                TextButton(
+                  onPressed: () {
+                    onDetailPressed(itemBank);
+                  },
+                  child: const Text(
+                    "查看",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -211,10 +221,27 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
   }
 
   onDetailPressed(ItemBank itemBank) {
-    if (itemBank.type == 2) {
-      return CompletionDetail(
-        itemBank: itemBank,
-      );
-    }
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) {
+          if (itemBank.type == 2) {
+            return CompletionDetail(
+              itemBank: itemBank,
+            );
+          }
+          return Container();
+        },
+      ),
+    );
+  }
+
+  onDeletePressed(ItemBank itemBank) async {
+    BotToast.showLoading();
+    await http.post(
+      Uri.parse("${Status.baseUrl}/deleteItemBank"),
+      body: {"id": itemBank.id.toString()},
+    );
+    initData();
+    BotToast.showText(text: "删除题目成功");
   }
 }
