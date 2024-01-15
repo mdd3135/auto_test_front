@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:auto_test_front/entity/itemBank.dart';
 import 'package:auto_test_front/page/completionDetail.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:excel/excel.dart' as excel_lib;
 
 class ProblemSetPage extends StatefulWidget {
   const ProblemSetPage({super.key});
@@ -27,32 +30,149 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    return Container(
-      constraints: BoxConstraints(
-        maxHeight: height - 220,
-        minHeight: height - 220,
-      ),
-      decoration: BoxDecoration(
-        border: Border.symmetric(
-          horizontal: BorderSide(
-            width: 2,
-            color: Theme.of(context).colorScheme.onBackground,
-          ),
-          vertical: BorderSide(
-            width: 1,
-            color: Theme.of(context).colorScheme.onBackground,
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        Positioned(
+          top: 80,
+          child: Container(
+            constraints: BoxConstraints(
+              maxHeight: height - 220,
+              minHeight: height - 220,
+            ),
+            decoration: BoxDecoration(
+              border: Border.symmetric(
+                horizontal: BorderSide(
+                  width: 2,
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
+                vertical: BorderSide(
+                  width: 1,
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
+              ),
+            ),
+            child: SingleChildScrollView(
+              child: DataTable(
+                border: TableBorder.all(
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
+                columns: dataColumn(),
+                rows: dataRowList,
+              ),
+            ),
           ),
         ),
-      ),
-      child: SingleChildScrollView(
-        child: DataTable(
-          border: TableBorder.all(
-            color: Theme.of(context).colorScheme.onBackground,
+        Positioned(
+          top: 20,
+          child: Row(
+            children: [
+              ElevatedButton(
+                onPressed: () {},
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    "导入选择题",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+                child: Text(""),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  importCompletionPressed();
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    "导入填空题",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+                child: Text(""),
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    "导入简答题",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+                child: Text(""),
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    "导入编程题",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+                child: Text(""),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  delPressed();
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    "删除所选",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+                child: Text(""),
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    "全部导出",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
-          columns: dataColumn(),
-          rows: dataRowList,
         ),
-      ),
+      ],
     );
   }
 
@@ -243,5 +363,90 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
     );
     initData();
     BotToast.showText(text: "删除题目成功");
+  }
+
+  importPressed() {}
+
+  delPressed() {}
+
+  importCompletionPressed() async {
+    var result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ["xlsx"],
+    );
+    if (result == null) {
+      BotToast.showText(text: "未选择文件");
+      return;
+    }
+    BotToast.showLoading();
+    String path = result.files.first.path!;
+    var bytes = File(path).readAsBytesSync();
+    var excel = excel_lib.Excel.decodeBytes(bytes);
+    for (var table in excel.tables.keys) {
+      int rowCount = 1;
+      int scoreColumn = -1;
+      int descriptionColumn = -1;
+      int contentColumn = -1;
+      int answerColumn = -1;
+      int analysisColumn = -1;
+      for (var row in excel[table].rows) {
+        if (rowCount == 1) {
+          for (int i = 0; i < row.length; i++) {
+            var cell = row[i];
+            if (cell == null) {
+              continue;
+            } else if (cell.value.toString() == "分值") {
+              scoreColumn = i;
+            } else if (cell.value.toString() == "题目描述") {
+              descriptionColumn = i;
+            } else if (cell.value.toString() == "题目内容") {
+              contentColumn = i;
+            } else if (cell.value.toString() == "答案") {
+              answerColumn = i;
+            } else if (cell.value.toString() == "解析") {
+              analysisColumn = i;
+            }
+          }
+          rowCount++;
+          continue;
+        }
+        var scoreCell = row[scoreColumn];
+        var descriptionCell = row[descriptionColumn];
+        var contentCell = row[contentColumn];
+        var answerCell = row[answerColumn];
+        var analysisCell = row[analysisColumn];
+        if (scoreCell == null ||
+            descriptionCell == null ||
+            contentCell == null ||
+            answerCell == null ||
+            analysisCell == null) {
+          continue;
+        }
+        String score = scoreCell.value.toString();
+        String description = descriptionCell.value.toString();
+        String content = contentCell.value.toString();
+        String answer = answerCell.value.toString();
+        String analysis = analysisCell.value.toString();
+        if (score == "null" ||
+            description == "null" ||
+            content == "null" ||
+            answer == "null" ||
+            analysis == "null") {
+          continue;
+        }
+        await http.post(
+          Uri.parse("${Status.baseUrl}/addCompletion"),
+          body: {
+            "score": score,
+            "description": description,
+            "content": content,
+            "answer": answer,
+            "analysis": analysis,
+          },
+        );
+      }
+    }
+    await initData();
+    BotToast.showText(text: "导入填空题成功");
   }
 }
