@@ -20,6 +20,12 @@ class ProblemSetPage extends StatefulWidget {
 class _ProblemSetPageState extends State<ProblemSetPage> {
   List<ItemBank> itemBankList = [];
   List<DataRow> dataRowList = [];
+  List<bool> isSelectedList = [];
+  bool isAllSelected = false;
+  int itemBankCount = 0;
+  int currentPage = 1;
+  int totalPage = 1;
+  int countId = 1;
 
   @override
   void initState() {
@@ -139,7 +145,7 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  delPressed();
+                  deletePressed();
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
@@ -172,20 +178,115 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
             ],
           ),
         ),
+        Positioned(
+          bottom: 20,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              DropdownButton(
+                focusColor: Colors.transparent,
+                value: countId,
+                items: const [
+                  DropdownMenuItem(
+                    value: 0,
+                    child: Text(
+                      "10条",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    value: 1,
+                    child: Text(
+                      "20条",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    value: 2,
+                    child: Text(
+                      "50条",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    value: 3,
+                    child: Text(
+                      "100条",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ],
+                onChanged: (value) {
+                  changeCountId(value);
+                },
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              IconButton(
+                onPressed: () {
+                  prePage();
+                },
+                icon: const Icon(
+                  Icons.arrow_left,
+                  size: 30,
+                ),
+              ),
+              Text(
+                "第$currentPage页/共$totalPage页",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  nextPage();
+                },
+                icon: const Icon(
+                  Icons.arrow_right,
+                  size: 30,
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Text(
+                "共$itemBankCount条记录",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                ),
+              )
+            ],
+          ),
+        )
       ],
     );
   }
 
   List<DataColumn> dataColumn() {
     return [
-      // DataColumn(
-      //   label: Checkbox(
-      //     value: isAllSelected,
-      //     onChanged: (value) {
-      //       allSelected(value ?? false);
-      //     },
-      //   ),
-      // ),
+      DataColumn(
+        label: Checkbox(
+          value: isAllSelected,
+          onChanged: (value) {
+            allSelected(value ?? false);
+          },
+        ),
+      ),
       const DataColumn(
         label: Text(
           "类型",
@@ -237,14 +338,34 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
   initData() async {
     BotToast.showLoading();
     var response = await http.get(
-      Uri.parse("${Status.baseUrl}/getAllItemBank"),
+      Uri.parse("${Status.baseUrl}/getItemBankCount"),
     );
     String bodyString = utf8.decode(response.bodyBytes);
+    itemBankCount = int.parse(bodyString);
+    int count = 0;
+    if (countId == 0) {
+      count = 10;
+    } else if (countId == 1) {
+      count = 20;
+    } else if (countId == 2) {
+      count = 50;
+    } else if (countId == 3) {
+      count = 100;
+    }
+    totalPage = (itemBankCount / count).ceil();
+    response = await http.get(
+      Uri.parse(
+        "${Status.baseUrl}/getAllItemBank?count=$count&page=$currentPage",
+      ),
+    );
+    bodyString = utf8.decode(response.bodyBytes);
     var bodyObj = jsonDecode(bodyString);
     itemBankList.clear();
     for (Map<String, dynamic> map in bodyObj) {
       itemBankList.add(ItemBank.objToItemBank(map));
     }
+    initSelectedList(false);
+    isAllSelected = false;
     await initDataRowList();
     BotToast.closeAllLoading();
   }
@@ -267,6 +388,14 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
       }
       DataRow row = DataRow(
         cells: [
+          DataCell(
+            Checkbox(
+              value: isSelectedList[i],
+              onChanged: (bool? value) {
+                selected(value ?? false, i);
+              },
+            ),
+          ),
           DataCell(
             Text(
               type,
@@ -304,33 +433,17 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
             ),
           ),
           DataCell(
-            Row(
-              children: [
-                TextButton(
-                  onPressed: () {
-                    onDeletePressed(itemBank);
-                  },
-                  child: const Text(
-                    "删除",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
-                  ),
+            TextButton(
+              onPressed: () {
+                onDetailPressed(itemBank);
+              },
+              child: const Text(
+                "查看",
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
                 ),
-                TextButton(
-                  onPressed: () {
-                    onDetailPressed(itemBank);
-                  },
-                  child: const Text(
-                    "查看",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ],
@@ -355,19 +468,77 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
     );
   }
 
-  onDeletePressed(ItemBank itemBank) async {
-    BotToast.showLoading();
-    await http.post(
-      Uri.parse("${Status.baseUrl}/deleteItemBank"),
-      body: {"id": itemBank.id.toString()},
-    );
-    initData();
-    BotToast.showText(text: "删除题目成功");
+  deleteConfirm() async {
+    for (int i = 0; i < isSelectedList.length; i++) {
+      if (isSelectedList[i]) {
+        String id = itemBankList[i].id.toString();
+        await http.post(
+          Uri.parse("${Status.baseUrl}/deleteItemBank"),
+          body: {"id": id},
+        );
+      }
+    }
   }
 
   importPressed() {}
 
-  delPressed() {}
+  deletePressed() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text(
+            "警告",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: const Text(
+            "该操作不可恢复！是否要删除所选题目？",
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 20,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text(
+                "取消",
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: const Text(
+                "确定",
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                ),
+              ),
+            )
+          ],
+        );
+      },
+    ).then((value) async {
+      if (value == false) {
+        return;
+      }
+      BotToast.showLoading();
+      await deleteConfirm();
+      // currentPage = 1;
+      await initData();
+      BotToast.showText(text: "删除所选题目成功");
+    });
+  }
 
   importCompletionPressed() async {
     var result = await FilePicker.platform.pickFiles(
@@ -448,5 +619,48 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
     }
     await initData();
     BotToast.showText(text: "导入填空题成功");
+  }
+
+  changeCountId(int? value) {
+    countId = value ?? 1;
+    currentPage = 1;
+    initData();
+  }
+
+   prePage() {
+    if (currentPage <= 1) {
+      return;
+    }
+    currentPage--;
+    initData();
+  }
+
+  nextPage() {
+    if (currentPage >= totalPage) {
+      return;
+    }
+    currentPage++;
+    initData();
+  }
+
+  selected(bool value, int i) {
+    isSelectedList[i] = value;
+    if (value == false) {
+      isAllSelected = false;
+    }
+    initDataRowList();
+  }
+
+  initSelectedList(bool value) {
+    isSelectedList.clear();
+    for (int i = 0; i < itemBankList.length; i++) {
+      isSelectedList.add(value);
+    }
+  }
+
+  allSelected(bool value) {
+    isAllSelected = value;
+    initSelectedList(value);
+    initDataRowList();
   }
 }

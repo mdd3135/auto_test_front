@@ -29,24 +29,11 @@ class _StuManPageState extends State<StuManPage> {
   int totalPage = 1;
   int countId = 1;
   bool isAllSelected = false;
-  late Timer timer;
 
   @override
   void initState() {
     super.initState();
     initData();
-    timer = Timer.periodic(
-      const Duration(milliseconds: 100),
-      (timer) {
-        // setState(() {});
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
   }
 
   @override
@@ -548,7 +535,7 @@ class _StuManPageState extends State<StuManPage> {
       await delConfirm();
       currentPage = 1;
       await initData();
-      BotToast.showText(text: "操作成功");
+      BotToast.showText(text: "删除所选学生成功");
     });
   }
 

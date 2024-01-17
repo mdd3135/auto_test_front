@@ -185,7 +185,7 @@ class _LoginPageState extends State<LoginPage> {
     BotToast.closeAllLoading();
     if (bodyString == "") {
       BotToast.showText(text: "登录失败，请检查用户名和密码");
-    } else {
+    } else { 
       var body = jsonDecode(bodyString);
       Status.user = User.objToUser(body);
       Status.user.pwd = pwd;
