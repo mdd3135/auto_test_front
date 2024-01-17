@@ -534,7 +534,7 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
       }
       BotToast.showLoading();
       await deleteConfirm();
-      // currentPage = 1;
+      currentPage = 1;
       await initData();
       BotToast.showText(text: "删除所选题目成功");
     });
@@ -627,7 +627,7 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
     initData();
   }
 
-   prePage() {
+  prePage() {
     if (currentPage <= 1) {
       return;
     }
