@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -614,7 +613,7 @@ class _StuManPageState extends State<StuManPage> {
         return NumberModDialog(number: user.number);
       },
     ).then((value) async {
-      if (value["isModify"]) {
+      if (value != null && value["isModify"]) {
         BotToast.showLoading();
         await modifyNumber(user.name, value["number"]);
         initData();
@@ -637,7 +636,7 @@ class _StuManPageState extends State<StuManPage> {
         return ClassroomModDialog(classroom: user.classroom);
       },
     ).then((value) async {
-      if (value["isModify"]) {
+      if (value != null && value["isModify"]) {
         BotToast.showLoading();
         await modifyClassroom(user.name, value["classroom"]);
         initData();

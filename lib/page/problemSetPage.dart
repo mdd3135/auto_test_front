@@ -387,6 +387,7 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
         type = "编程题";
       }
       DataRow row = DataRow(
+        selected: isSelectedList[i],
         cells: [
           DataCell(
             Checkbox(

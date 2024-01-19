@@ -128,10 +128,22 @@ class _CompletionDetailState extends State<CompletionDetail> {
           ),
         ],
       ),
+      const SizedBox(
+        height: 5,
+      ),
       Container(
         decoration: BoxDecoration(
-          border: Border.all(),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
+              blurRadius: 10,
+              offset: const Offset(0, 5),
+            ),
+          ],
+          color: Theme.of(context).colorScheme.background,
         ),
+        padding: const EdgeInsets.all(10),
         constraints: const BoxConstraints(
           minWidth: 800,
         ),
@@ -157,10 +169,22 @@ class _CompletionDetailState extends State<CompletionDetail> {
           ),
         ],
       ),
+      const SizedBox(
+        height: 5,
+      ),
       Container(
         decoration: BoxDecoration(
-          border: Border.all(),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
+              blurRadius: 10,
+              offset: const Offset(0, 5),
+            ),
+          ],
+          color: Theme.of(context).colorScheme.background,
         ),
+        padding: const EdgeInsets.all(10),
         constraints: const BoxConstraints(minWidth: 800),
         child: Text(
           completion.content,
@@ -194,10 +218,24 @@ class _CompletionDetailState extends State<CompletionDetail> {
         ),
       );
       columns.add(
+        const SizedBox(
+          height: 5,
+        ),
+      );
+      columns.add(
         Container(
           decoration: BoxDecoration(
-            border: Border.all(),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
+                blurRadius: 10,
+                offset: const Offset(0, 5),
+              ),
+            ],
+            color: Theme.of(context).colorScheme.background,
           ),
+          padding: const EdgeInsets.all(10),
           constraints: const BoxConstraints(minWidth: 800),
           child: Text(
             answer,
@@ -228,10 +266,24 @@ class _CompletionDetailState extends State<CompletionDetail> {
       ),
     );
     columns.add(
+      const SizedBox(
+        height: 5,
+      ),
+    );
+    columns.add(
       Container(
         decoration: BoxDecoration(
-          border: Border.all(),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
+              blurRadius: 10,
+              offset: const Offset(0, 5),
+            ),
+          ],
+          color: Theme.of(context).colorScheme.background,
         ),
+        padding: const EdgeInsets.all(10),
         constraints: const BoxConstraints(minWidth: 800),
         child: Text(
           completion.analysis,
