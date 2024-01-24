@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:auto_test_front/entity/completion.dart';
+import 'package:auto_test_front/entity/choice.dart';
 import 'package:auto_test_front/entity/itemBank.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -8,17 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:http/http.dart' as http;
 
-class CompletionDetail extends StatefulWidget {
-  const CompletionDetail({super.key, required this.itemBank});
+class ChoiceDetail extends StatefulWidget {
+  const ChoiceDetail({super.key, required this.itemBank});
+
   final ItemBank itemBank;
 
   @override
-  State<CompletionDetail> createState() => _CompletionDetailState();
+  State<ChoiceDetail> createState() => _ChoiceDetailState();
 }
 
-class _CompletionDetailState extends State<CompletionDetail> {
-  late Completion completion;
+class _ChoiceDetailState extends State<ChoiceDetail> {
   int ok = 0;
+  late Choice choice;
 
   @override
   void initState() {
@@ -32,7 +33,9 @@ class _CompletionDetailState extends State<CompletionDetail> {
       appBar: AppBar(
         title: const Text(
           "题目详情",
-          style: TextStyle(fontWeight: FontWeight.w500),
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
         ),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
@@ -53,15 +56,12 @@ class _CompletionDetailState extends State<CompletionDetail> {
           ),
           const SizedBox(
             width: 10,
-          )
+          ),
         ],
       ),
       body: SingleChildScrollView(
         child: Center(
-          child: SizedBox(
-            child: detailBody(),
-            width: 800,
-          ),
+          child: SizedBox(child: detailBody(), width: 800),
         ),
       ),
     );
@@ -85,7 +85,7 @@ class _CompletionDetailState extends State<CompletionDetail> {
             ),
           ),
           Text(
-            "填空题",
+            "选择题",
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w500,
@@ -187,7 +187,7 @@ class _CompletionDetailState extends State<CompletionDetail> {
         padding: const EdgeInsets.all(10),
         constraints: const BoxConstraints(minWidth: 800),
         child: Text(
-          completion.content,
+          choice.content,
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500,
@@ -195,58 +195,6 @@ class _CompletionDetailState extends State<CompletionDetail> {
         ),
       ),
     ];
-    String answerString = completion.answer;
-    List<dynamic> answerList = jsonDecode(answerString);
-    for (int i = 0; i < answerList.length; i++) {
-      String answer = answerList[i];
-      columns.add(
-        const SizedBox(
-          height: 20,
-        ),
-      );
-      columns.add(
-        Row(
-          children: [
-            Text(
-              "第${i + 1}空答案",
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      );
-      columns.add(
-        const SizedBox(
-          height: 5,
-        ),
-      );
-      columns.add(
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 5),
-              ),
-            ],
-            color: Theme.of(context).colorScheme.background,
-          ),
-          padding: const EdgeInsets.all(10),
-          constraints: const BoxConstraints(minWidth: 800),
-          child: Text(
-            answer,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-      );
-    }
     columns.add(
       const SizedBox(
         height: 20,
@@ -286,7 +234,7 @@ class _CompletionDetailState extends State<CompletionDetail> {
         padding: const EdgeInsets.all(10),
         constraints: const BoxConstraints(minWidth: 800),
         child: Text(
-          completion.analysis,
+          choice.analysis,
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500,
@@ -303,12 +251,12 @@ class _CompletionDetailState extends State<CompletionDetail> {
     BotToast.showLoading();
     var response = await http.get(
       Uri.parse(
-        "${Status.baseUrl}/getCompletionById?id=${widget.itemBank.questionId}",
+        "${Status.baseUrl}/getChoiceById?id=${widget.itemBank.questionId}",
       ),
     );
     String bodyString = utf8.decode(response.bodyBytes);
     Map<String, dynamic> map = json.decode(bodyString);
-    completion = Completion.objToCompletion(map);
+    choice = Choice.objToChoice(map);
     ok = 1;
     BotToast.closeAllLoading();
     setState(() {});

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:auto_test_front/entity/itemBank.dart';
+import 'package:auto_test_front/page/choiceDetail.dart';
 import 'package:auto_test_front/page/completionDetail.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -458,7 +459,11 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
-          if (itemBank.type == 2) {
+          if (itemBank.type == 1) {
+            return ChoiceDetail(
+              itemBank: itemBank,
+            );
+          } else if (itemBank.type == 2) {
             return CompletionDetail(
               itemBank: itemBank,
             );
