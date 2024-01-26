@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
             ),
             selectedLabelTextStyle: TextStyle(
               fontSize: 20,
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
               fontWeight: FontWeight.bold,
             ),
             extended: true,

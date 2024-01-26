@@ -75,7 +75,9 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
           child: Row(
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  importChoicePressed();
+                },
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   child: const Text(
@@ -625,6 +627,21 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
     }
     await initData();
     BotToast.showText(text: "导入填空题成功");
+  }
+
+  importChoicePressed() async {
+    var result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ["xlsx"],
+    );
+    if (result == null) {
+      BotToast.showText(text: "未选择文件");
+      return;
+    }
+    BotToast.showLoading();
+    String path = result.files.first.path!;
+    var bytes = File(path).readAsBytesSync();
+    var excel = excel_lib.Excel.decodeBytes(bytes);
   }
 
   changeCountId(int? value) {

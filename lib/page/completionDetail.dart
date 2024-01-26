@@ -199,101 +199,93 @@ class _CompletionDetailState extends State<CompletionDetail> {
     List<dynamic> answerList = jsonDecode(answerString);
     for (int i = 0; i < answerList.length; i++) {
       String answer = answerList[i];
-      columns.add(
-        const SizedBox(
-          height: 20,
-        ),
-      );
-      columns.add(
-        Row(
-          children: [
-            Text(
-              "第${i + 1}空答案",
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      );
-      columns.add(
-        const SizedBox(
-          height: 5,
-        ),
-      );
-      columns.add(
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 5),
+      columns.addAll(
+        [
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              Text(
+                "第${i + 1}空答案",
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
-            color: Theme.of(context).colorScheme.background,
           ),
-          padding: const EdgeInsets.all(10),
-          constraints: const BoxConstraints(minWidth: 800),
-          child: Text(
-            answer,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
+          const SizedBox(
+            height: 5,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+              color: Theme.of(context).colorScheme.background,
             ),
-          ),
-        ),
-      );
-    }
-    columns.add(
-      const SizedBox(
-        height: 20,
-      ),
-    );
-    columns.add(
-      const Row(
-        children: [
-          Text(
-            "解析",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+            padding: const EdgeInsets.all(10),
+            constraints: const BoxConstraints(minWidth: 800),
+            child: Text(
+              answer,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ],
-      ),
-    );
-    columns.add(
-      const SizedBox(
-        height: 5,
-      ),
-    );
-    columns.add(
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
-          color: Theme.of(context).colorScheme.background,
-        ),
-        padding: const EdgeInsets.all(10),
-        constraints: const BoxConstraints(minWidth: 800),
-        child: Text(
-          completion.analysis,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
+      );
+      columns.addAll(
+        [
+          const SizedBox(
+            height: 20,
           ),
-        ),
-      ),
-    );
+          const Row(
+            children: [
+              Text(
+                "解析：",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+              color: Theme.of(context).colorScheme.background,
+            ),
+            padding: const EdgeInsets.all(10),
+            constraints: const BoxConstraints(minWidth: 800),
+            child: Text(
+              completion.analysis,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
     return Column(
       children: columns,
     );

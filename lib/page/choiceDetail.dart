@@ -71,13 +71,14 @@ class _ChoiceDetailState extends State<ChoiceDetail> {
     if (ok == 0) {
       return;
     }
+    String subType = choice.isMultiple == 1 ? "多选" : "单选";
     List<Widget> columns = [
       const SizedBox(
         height: 40,
       ),
-      const Row(
+      Row(
         children: [
-          Text(
+          const Text(
             "题目类型：",
             style: TextStyle(
               fontSize: 20,
@@ -85,8 +86,8 @@ class _ChoiceDetailState extends State<ChoiceDetail> {
             ),
           ),
           Text(
-            "选择题",
-            style: TextStyle(
+            "选择题（$subType）",
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w500,
             ),
@@ -194,17 +195,13 @@ class _ChoiceDetailState extends State<ChoiceDetail> {
           ),
         ),
       ),
-    ];
-    columns.add(
       const SizedBox(
         height: 20,
       ),
-    );
-    columns.add(
       const Row(
         children: [
           Text(
-            "解析",
+            "选项：",
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -212,35 +209,111 @@ class _ChoiceDetailState extends State<ChoiceDetail> {
           ),
         ],
       ),
-    );
-    columns.add(
       const SizedBox(
         height: 5,
       ),
-    );
-    columns.add(
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
-          color: Theme.of(context).colorScheme.background,
-        ),
-        padding: const EdgeInsets.all(10),
-        constraints: const BoxConstraints(minWidth: 800),
-        child: Text(
-          choice.analysis,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
+    ];
+    List<dynamic> answerList = jsonDecode(choice.answer);
+    Map<String, dynamic> optionMap = jsonDecode(choice.options);
+    List<Widget> textList = [];
+    for (String key in optionMap.keys) {
+      bool isTrue = false;
+      if (answerList.contains(key)) {
+        isTrue = true;
+      }
+      textList.add(
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: isTrue
+                ? Theme.of(context).colorScheme.inversePrimary.withOpacity(0.5)
+                : Theme.of(context).colorScheme.background,
+          ),
+          margin: const EdgeInsets.symmetric(vertical: 2),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  "$key：${optionMap[key]}",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+                ),
+              ),
+              if (isTrue)
+                const Icon(
+                  Icons.check,
+                )
+            ],
           ),
         ),
-      ),
+      );
+    }
+    columns.addAll(
+      [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
+                blurRadius: 10,
+                offset: const Offset(0, 5),
+              ),
+            ],
+            color: Theme.of(context).colorScheme.background,
+          ),
+          padding: const EdgeInsets.all(10),
+          constraints: const BoxConstraints(minWidth: 800),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: textList,
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        const Row(
+          children: [
+            Text(
+              "解析：",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
+                blurRadius: 10,
+                offset: const Offset(0, 5),
+              ),
+            ],
+            color: Theme.of(context).colorScheme.background,
+          ),
+          padding: const EdgeInsets.all(10),
+          constraints: const BoxConstraints(minWidth: 800),
+          child: Text(
+            choice.analysis,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ],
     );
     return Column(
       children: columns,
