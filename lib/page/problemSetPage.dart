@@ -642,6 +642,88 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
     String path = result.files.first.path!;
     var bytes = File(path).readAsBytesSync();
     var excel = excel_lib.Excel.decodeBytes(bytes);
+    for (var table in excel.tables.keys) {
+      int rowCount = 1;
+      int scoreColumn = -1;
+      int descriptionColumn = -1;
+      int contentColumn = -1;
+      int optionsColumn = -1;
+      int answerColumn = -1;
+      int analysisColumn = -1;
+      int isMultipleColumn = -1;
+      for (var row in excel[table].rows) {
+        if (rowCount == 1) {
+          for (int i = 0; i < row.length; i++) {
+            var cell = row[i];
+            if (cell == null) {
+              continue;
+            } else if (cell.value.toString() == "分值") {
+              scoreColumn = i;
+            } else if (cell.value.toString() == "题目描述") {
+              descriptionColumn = i;
+            } else if (cell.value.toString() == "题目内容") {
+              contentColumn = i;
+            } else if (cell.value.toString() == "可选项") {
+              optionsColumn = i;
+            } else if (cell.value.toString() == "答案") {
+              answerColumn = i;
+            } else if (cell.value.toString() == "解析") {
+              analysisColumn = i;
+            } else if (cell.value.toString() == "是否多选") {
+              isMultipleColumn = i;
+            }
+          }
+          rowCount++;
+          continue;
+        }
+        var scoreCell = row[scoreColumn];
+        var descriptionCell = row[descriptionColumn];
+        var contentCell = row[contentColumn];
+        var optionsCell = row[optionsColumn];
+        var answerCell = row[answerColumn];
+        var analysisCell = row[analysisColumn];
+        var isMultipleCell = row[isMultipleColumn];
+        if (scoreCell == null ||
+            descriptionCell == null ||
+            contentCell == null ||
+            optionsCell == null ||
+            answerCell == null ||
+            analysisCell == null ||
+            isMultipleCell == null) {
+          continue;
+        }
+        String score = scoreCell.value.toString();
+        String description = descriptionCell.value.toString();
+        String content = contentCell.value.toString();
+        String options = optionsCell.value.toString();
+        String answer = answerCell.value.toString();
+        String analysis = analysisCell.value.toString();
+        String isMultiple = isMultipleCell.value.toString();
+        if (score == "null" ||
+            description == "null" ||
+            content == "null" ||
+            options == "null" ||
+            answer == "null" ||
+            analysis == "null" ||
+            isMultiple == "null") {
+          continue;
+        }
+        await http.post(
+          Uri.parse("${Status.baseUrl}/addChoice"),
+          body: {
+            "score": score,
+            "description": description,
+            "content": content,
+            "options": options,
+            "answer": answer,
+            "analysis": analysis,
+            "isMultiple": isMultiple,
+          },
+        );
+      }
+    }
+    await initData();
+    BotToast.showText(text: "导入选择题成功");
   }
 
   changeCountId(int? value) {
