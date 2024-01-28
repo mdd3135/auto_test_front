@@ -6,6 +6,7 @@ import 'package:auto_test_front/page/choiceDetail.dart';
 import 'package:auto_test_front/page/completionDetail.dart';
 import 'package:auto_test_front/page/shortAnswerPage.dart';
 import 'package:auto_test_front/status.dart';
+import 'package:auto_test_front/widget/modDescription.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -411,11 +412,16 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
             ),
           ),
           DataCell(
-            Text(
-              itemBank.description,
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
+            TextButton(
+              onPressed: () {
+                onDescriptionPressed(itemBank);
+              },
+              child: Text(
+                itemBank.description,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                ),
               ),
             ),
           ),
@@ -429,11 +435,14 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
             ),
           ),
           DataCell(
-            Text(
-              itemBank.score.toString(),
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                itemBank.score.toString(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                ),
               ),
             ),
           ),
@@ -549,6 +558,40 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
       await initData();
       BotToast.showText(text: "删除所选题目成功");
     });
+  }
+
+  onDescriptionPressed(ItemBank itemBank) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return ModDescription(description: itemBank.description);
+      },
+    ).then((value) async {
+      if (value != null && value["isModify"] == true) {
+        BotToast.showLoading();
+        itemBank.description = value["description"];
+        await modifyDescription(itemBank);
+        BotToast.cleanAll();
+      }
+    });
+  }
+
+  modifyDescription(ItemBank itemBank) async {
+    var response = await http.post(
+      Uri.parse("${Status.baseUrl}/modItemBankById"),
+      body: {
+        "id": itemBank.id.toString(),
+        "score": itemBank.score.toString(),
+        "description": itemBank.description,
+      },
+    );
+    String bodyString = utf8.decode(response.bodyBytes);
+    if (bodyString == "") {
+      BotToast.showText(text: "修改题目描述失败");
+    } else {
+      BotToast.showText(text: "修改题目描述成功");
+      initData();
+    }
   }
 
   importCompletionPressed() async {
