@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:auto_test_front/entity/itemBank.dart';
 import 'package:auto_test_front/page/choiceDetail.dart';
 import 'package:auto_test_front/page/completionDetail.dart';
+import 'package:auto_test_front/page/shortAnswerPage.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:file_picker/file_picker.dart';
@@ -469,6 +470,10 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
             return CompletionDetail(
               itemBank: itemBank,
             );
+          } else if (itemBank.type == 3) {
+            return ShortAnswerPage(
+              itemBank: itemBank,
+            );
           }
           return Container();
         },
@@ -487,8 +492,6 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
       }
     }
   }
-
-  importPressed() {}
 
   deletePressed() {
     showDialog(
