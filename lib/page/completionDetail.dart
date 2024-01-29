@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:auto_test_front/entity/completion.dart';
 import 'package:auto_test_front/entity/itemBank.dart';
 import 'package:auto_test_front/status.dart';
+import 'package:auto_test_front/widget/shadowContainer.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
@@ -131,22 +132,7 @@ class _CompletionDetailState extends State<CompletionDetail> {
       const SizedBox(
         height: 5,
       ),
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
-          color: Theme.of(context).colorScheme.background,
-        ),
-        padding: const EdgeInsets.all(10),
-        constraints: const BoxConstraints(
-          minWidth: 800,
-        ),
+      ShadowContainer(
         child: Text(
           widget.itemBank.description,
           style: const TextStyle(
@@ -172,20 +158,7 @@ class _CompletionDetailState extends State<CompletionDetail> {
       const SizedBox(
         height: 5,
       ),
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
-          color: Theme.of(context).colorScheme.background,
-        ),
-        padding: const EdgeInsets.all(10),
-        constraints: const BoxConstraints(minWidth: 800),
+      ShadowContainer(
         child: Text(
           completion.content,
           style: const TextStyle(
@@ -218,20 +191,7 @@ class _CompletionDetailState extends State<CompletionDetail> {
           const SizedBox(
             height: 5,
           ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-              color: Theme.of(context).colorScheme.background,
-            ),
-            padding: const EdgeInsets.all(10),
-            constraints: const BoxConstraints(minWidth: 800),
+          ShadowContainer(
             child: Text(
               answer,
               style: const TextStyle(
@@ -261,20 +221,7 @@ class _CompletionDetailState extends State<CompletionDetail> {
           const SizedBox(
             height: 5,
           ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-              color: Theme.of(context).colorScheme.background,
-            ),
-            padding: const EdgeInsets.all(10),
-            constraints: const BoxConstraints(minWidth: 800),
+          ShadowContainer(
             child: Text(
               completion.analysis,
               style: const TextStyle(

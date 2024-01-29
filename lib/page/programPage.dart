@@ -156,22 +156,7 @@ class _ProgramPageState extends State<ProgramPage> {
       const SizedBox(
         height: 5,
       ),
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
-          color: Theme.of(context).colorScheme.background,
-        ),
-        padding: const EdgeInsets.all(10),
-        constraints: const BoxConstraints(
-          minWidth: 800,
-        ),
+      ShadowContainer(
         child: Text(
           widget.itemBank.description,
           style: const TextStyle(
@@ -197,20 +182,7 @@ class _ProgramPageState extends State<ProgramPage> {
       const SizedBox(
         height: 5,
       ),
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
-          color: Theme.of(context).colorScheme.background,
-        ),
-        padding: const EdgeInsets.all(10),
-        constraints: const BoxConstraints(minWidth: 800),
+      ShadowContainer(
         child: Text(
           program.content,
           style: const TextStyle(
@@ -306,24 +278,14 @@ class _ProgramPageState extends State<ProgramPage> {
         const SizedBox(
           height: 5,
         ),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 5),
-              ),
-            ],
-            color: Theme.of(context).colorScheme.background,
-          ),
-          padding: const EdgeInsets.all(10),
-          constraints: const BoxConstraints(minWidth: 800),
+        ShadowContainer(
           child: Text(
             program.answer,
             style: const TextStyle(
-                fontSize: 20, fontWeight: FontWeight.w500, fontFamily: "mono"),
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              fontFamily: "mono",
+            ),
           ),
         ),
         const SizedBox(
@@ -343,20 +305,7 @@ class _ProgramPageState extends State<ProgramPage> {
         const SizedBox(
           height: 5,
         ),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 5),
-              ),
-            ],
-            color: Theme.of(context).colorScheme.background,
-          ),
-          padding: const EdgeInsets.all(10),
-          constraints: const BoxConstraints(minWidth: 800),
+        ShadowContainer(
           child: Text(
             program.analysis,
             style: const TextStyle(
