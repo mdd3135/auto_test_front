@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:auto_test_front/entity/itemBank.dart';
 import 'package:auto_test_front/page/choiceDetail.dart';
 import 'package:auto_test_front/page/completionDetail.dart';
+import 'package:auto_test_front/page/programPage.dart';
 import 'package:auto_test_front/page/shortAnswerPage.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/modDescriptionDialog.dart';
@@ -484,6 +485,10 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
             );
           } else if (itemBank.type == 3) {
             return ShortAnswerPage(
+              itemBank: itemBank,
+            );
+          } else if (itemBank.type == 4) {
+            return ProgramPage(
               itemBank: itemBank,
             );
           }

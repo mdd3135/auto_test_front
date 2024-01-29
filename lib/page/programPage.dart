@@ -1,25 +1,26 @@
 import 'dart:convert';
 
 import 'package:auto_test_front/entity/itemBank.dart';
-import 'package:auto_test_front/entity/shortAnswer.dart';
+import 'package:auto_test_front/entity/program.dart';
 import 'package:auto_test_front/status.dart';
+import 'package:auto_test_front/widget/shadowContainer.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:http/http.dart' as http;
 
-class ShortAnswerPage extends StatefulWidget {
-  const ShortAnswerPage({super.key, required this.itemBank});
+class ProgramPage extends StatefulWidget {
+  const ProgramPage({super.key, required this.itemBank});
 
   final ItemBank itemBank;
 
   @override
-  State<ShortAnswerPage> createState() => _ShortAnswerPageState();
+  State<ProgramPage> createState() => _ProgramPageState();
 }
 
-class _ShortAnswerPageState extends State<ShortAnswerPage> {
+class _ProgramPageState extends State<ProgramPage> {
   int ok = 0;
-  late ShortAnswer shortAnswer;
+  late Program program;
 
   @override
   void initState() {
@@ -88,7 +89,7 @@ class _ShortAnswerPageState extends State<ShortAnswerPage> {
             ),
           ),
           Text(
-            "简答题",
+            "编程题",
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w500,
@@ -110,6 +111,27 @@ class _ShortAnswerPageState extends State<ShortAnswerPage> {
           ),
           Text(
             widget.itemBank.score.toString(),
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(
+        height: 20,
+      ),
+      Row(
+        children: [
+          const Text(
+            "编程语言：",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            program.language,
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w500,
@@ -190,7 +212,7 @@ class _ShortAnswerPageState extends State<ShortAnswerPage> {
         padding: const EdgeInsets.all(10),
         constraints: const BoxConstraints(minWidth: 800),
         child: Text(
-          shortAnswer.content,
+          program.content,
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500,
@@ -199,83 +221,152 @@ class _ShortAnswerPageState extends State<ShortAnswerPage> {
       ),
       const SizedBox(
         height: 20,
-      ),
-      const Row(
-        children: [
-          Text(
-            "题目答案：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-      const SizedBox(
-        height: 5,
-      ),
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
-          color: Theme.of(context).colorScheme.background,
-        ),
-        padding: const EdgeInsets.all(10),
-        constraints: const BoxConstraints(minWidth: 800),
-        child: Text(
-          shortAnswer.answer,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-      const SizedBox(
-        height: 20,
-      ),
-      const Row(
-        children: [
-          Text(
-            "解析：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-      const SizedBox(
-        height: 5,
-      ),
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
-          color: Theme.of(context).colorScheme.background,
-        ),
-        padding: const EdgeInsets.all(10),
-        constraints: const BoxConstraints(minWidth: 800),
-        child: Text(
-          shortAnswer.analysis,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
       ),
     ];
+    List<dynamic> input = jsonDecode(program.input);
+    List<dynamic> output = jsonDecode(program.output);
+    for (int i = 0; i < input.length; i++) {
+      columns.addAll([
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                "样例输入${i + 1}：",
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "nomo",
+                ),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                "样例输出${i + 1}：",
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "nomo",
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: ShadowContainer(
+                child: Text(
+                  input[i],
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: "mono",
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: ShadowContainer(
+                child: Text(
+                  output[i],
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: "mono",
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 20,
+        )
+      ]);
+    }
+    columns.addAll(
+      [
+        const Row(
+          children: [
+            Text(
+              "题目答案：",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
+                blurRadius: 10,
+                offset: const Offset(0, 5),
+              ),
+            ],
+            color: Theme.of(context).colorScheme.background,
+          ),
+          padding: const EdgeInsets.all(10),
+          constraints: const BoxConstraints(minWidth: 800),
+          child: Text(
+            program.answer,
+            style: const TextStyle(
+                fontSize: 20, fontWeight: FontWeight.w500, fontFamily: "mono"),
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        const Row(
+          children: [
+            Text(
+              "解析：",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).colorScheme.shadow.withOpacity(0.3),
+                blurRadius: 10,
+                offset: const Offset(0, 5),
+              ),
+            ],
+            color: Theme.of(context).colorScheme.background,
+          ),
+          padding: const EdgeInsets.all(10),
+          constraints: const BoxConstraints(minWidth: 800),
+          child: Text(
+            program.analysis,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ],
+    );
     return Column(
       children: columns,
     );
@@ -285,12 +376,12 @@ class _ShortAnswerPageState extends State<ShortAnswerPage> {
     BotToast.showLoading();
     var response = await http.get(
       Uri.parse(
-        "${Status.baseUrl}/getShortAnswerById?id=${widget.itemBank.questionId}",
+        "${Status.baseUrl}/getProgramById?id=${widget.itemBank.questionId}",
       ),
     );
     String bodyString = utf8.decode(response.bodyBytes);
     Map<String, dynamic> map = json.decode(bodyString);
-    shortAnswer = ShortAnswer.objToShortAnswer(map);
+    program = Program.objToProgram(map);
     ok = 1;
     BotToast.closeAllLoading();
     setState(() {});
