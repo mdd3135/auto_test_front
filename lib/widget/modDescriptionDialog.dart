@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class ModDescription extends StatefulWidget {
-  const ModDescription({super.key, required this.description});
+class ModDescriptionDialog extends StatefulWidget {
+  const ModDescriptionDialog({super.key, required this.description});
 
   final String description;
 
   @override
-  State<ModDescription> createState() => _ModDescriptionState();
+  State<ModDescriptionDialog> createState() => _ModDescriptionDialogState();
 }
 
-class _ModDescriptionState extends State<ModDescription> {
+class _ModDescriptionDialogState extends State<ModDescriptionDialog> {
   String description = "";
 
   @override

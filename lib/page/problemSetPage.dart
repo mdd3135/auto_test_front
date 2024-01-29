@@ -6,7 +6,8 @@ import 'package:auto_test_front/page/choiceDetail.dart';
 import 'package:auto_test_front/page/completionDetail.dart';
 import 'package:auto_test_front/page/shortAnswerPage.dart';
 import 'package:auto_test_front/status.dart';
-import 'package:auto_test_front/widget/modDescription.dart';
+import 'package:auto_test_front/widget/modDescriptionDialog.dart';
+import 'package:auto_test_front/widget/modifyScoreDialog.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -436,7 +437,9 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
           ),
           DataCell(
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                onModifyScorePressed(itemBank);
+              },
               child: Text(
                 itemBank.score.toString(),
                 style: const TextStyle(
@@ -564,19 +567,20 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
     showDialog(
       context: context,
       builder: (context) {
-        return ModDescription(description: itemBank.description);
+        return ModDescriptionDialog(
+          description: itemBank.description,
+        );
       },
-    ).then((value) async {
+    ).then((value) {
       if (value != null && value["isModify"] == true) {
         BotToast.showLoading();
         itemBank.description = value["description"];
-        await modifyDescription(itemBank);
-        BotToast.cleanAll();
+        modifyDescriptionAndScore(itemBank);
       }
     });
   }
 
-  modifyDescription(ItemBank itemBank) async {
+  modifyDescriptionAndScore(ItemBank itemBank) async {
     var response = await http.post(
       Uri.parse("${Status.baseUrl}/modItemBankById"),
       body: {
@@ -592,6 +596,21 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
       BotToast.showText(text: "修改题目描述成功");
       initData();
     }
+  }
+
+  onModifyScorePressed(ItemBank itemBank) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return ModifyScoreDialog(score: itemBank.score);
+      },
+    ).then((value) {
+      if (value != null && value["isModify"] == true) {
+        BotToast.showLoading();
+        itemBank.score = value["score"];
+        modifyDescriptionAndScore(itemBank);
+      }
+    });
   }
 
   importCompletionPressed() async {
