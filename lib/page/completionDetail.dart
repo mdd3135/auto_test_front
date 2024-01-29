@@ -230,6 +230,9 @@ class _CompletionDetailState extends State<CompletionDetail> {
               ),
             ),
           ),
+          const SizedBox(
+            width: 20,
+          ),
         ],
       );
     }

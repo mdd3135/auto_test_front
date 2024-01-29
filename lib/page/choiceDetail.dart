@@ -260,6 +260,9 @@ class _ChoiceDetailState extends State<ChoiceDetail> {
             ),
           ),
         ),
+        const SizedBox(
+          width: 20,
+        ),
       ],
     );
     return Column(

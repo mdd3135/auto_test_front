@@ -222,6 +222,9 @@ class _ShortAnswerPageState extends State<ShortAnswerPage> {
           ),
         ),
       ),
+      const SizedBox(
+        width: 20,
+      ),
     ];
     return Column(
       children: columns,

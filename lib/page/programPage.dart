@@ -211,6 +211,9 @@ class _ProgramPageState extends State<ProgramPage> {
                 ),
               ),
             ),
+            const SizedBox(
+              width: 20,
+            ),
             Expanded(
               child: Text(
                 "样例输出${i + 1}：",
@@ -241,7 +244,7 @@ class _ProgramPageState extends State<ProgramPage> {
               ),
             ),
             const SizedBox(
-              width: 10,
+              width: 20,
             ),
             Expanded(
               child: ShadowContainer(
@@ -313,6 +316,9 @@ class _ProgramPageState extends State<ProgramPage> {
               fontWeight: FontWeight.w500,
             ),
           ),
+        ),
+        const SizedBox(
+          height: 20,
         ),
       ],
     );
