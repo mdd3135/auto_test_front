@@ -117,7 +117,9 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
                 child: Text(""),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  importShortAnswerPressed();
+                },
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   child: const Text(
@@ -794,6 +796,87 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
     }
     await initData();
     BotToast.showText(text: "导入选择题成功");
+  }
+
+  importShortAnswerPressed() async {
+    var result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ["xlsx"],
+    );
+    if (result == null) {
+      BotToast.showText(text: "未选择文件");
+      return;
+    }
+    // BotToast.showLoading();
+    String path = result.files.first.path!;
+    var bytes = File(path).readAsBytesSync();
+    var excel = excel_lib.Excel.decodeBytes(bytes);
+    for (var table in excel.tables.keys) {
+      int rowCount = 1;
+      int scoreColumn = -1;
+      int descriptionColumn = -1;
+      int contentColumn = -1;
+      int answerColumn = -1;
+      int analysisColumn = -1;
+      for (var row in excel[table].rows) {
+        if (rowCount == 1) {
+          for (int i = 0; i < row.length; i++) {
+            var cell = row[i];
+            if (cell == null) {
+              continue;
+            } else if (cell.value.toString() == "分值") {
+              scoreColumn = i;
+            } else if (cell.value.toString() == "题目描述") {
+              descriptionColumn = i;
+            } else if (cell.value.toString() == "题目内容") {
+              contentColumn = i;
+            } else if (cell.value.toString() == "答案") {
+              answerColumn = i;
+            } else if (cell.value.toString() == "解析") {
+              analysisColumn = i;
+            }
+          }
+          rowCount++;
+          continue;
+        }
+        var scoreCell = row[scoreColumn];
+        var descriptionCell = row[descriptionColumn];
+        var contentCell = row[contentColumn];
+        var answerCell = row[answerColumn];
+        var analysisCell = row[analysisColumn];
+        if (scoreCell == null ||
+            descriptionCell == null ||
+            contentCell == null ||
+            answerCell == null ||
+            analysisCell == null) {
+          continue;
+        }
+        String score = scoreCell.value.toString();
+        String description = descriptionCell.value.toString();
+        String content = contentCell.value.toString();
+        String answer = answerCell.value.toString();
+        String analysis = analysisCell.value.toString();
+        if (score == "null" ||
+            description == "null" ||
+            content == "null" ||
+            answer == "null" ||
+            analysis == "null") {
+          continue;
+        }
+        await http.post(
+          Uri.parse("${Status.baseUrl}/addShortAnswer"),
+          body: {
+            "score": score,
+            "description": description,
+            "content": content,
+            "answer": answer,
+            "analysis": analysis,
+          },
+        );
+      }
+    }
+    await initData();
+    BotToast.showText(text: "导入简答题成功");
   }
 
   changeCountId(int? value) {

@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
           appTitle,
           style: const TextStyle(fontWeight: FontWeight.w500),
         ),
-        leading: const Icon(Icons.auto_awesome),
+        leading: const Icon(Icons.checklist),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           IconButton(
