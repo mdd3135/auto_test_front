@@ -4,7 +4,7 @@ import 'package:auto_test_front/page/myPage.dart';
 import 'package:auto_test_front/page/problemSetPage.dart';
 import 'package:auto_test_front/page/settingPage.dart';
 import 'package:auto_test_front/page/stuManPage.dart';
-import 'package:auto_test_front/page/testPage.dart';
+import 'package:auto_test_front/page/homeworkPage.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
@@ -151,7 +151,7 @@ class _GeneratorPageState extends State<GeneratorPage> {
     } else if (Status.pageId == 2) {
       return const ProblemSetPage();
     } else if (Status.pageId == 3) {
-      return const TestPage();
+      return const HomeworkPage();
     } else if (Status.pageId == 4) {
       return const SizedBox(
         width: 400,
