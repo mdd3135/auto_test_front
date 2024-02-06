@@ -15,6 +15,7 @@ class HomeworkPage extends StatefulWidget {
 
 class _HomeworkPageState extends State<HomeworkPage> {
   List<Homework> homeworkList = [];
+  List<int> submitCountList = [];
   List<DataRow> dataRowList = [];
   List<bool> isSelectedList = [];
   int homeworkCount = 0;
@@ -96,7 +97,21 @@ class _HomeworkPageState extends State<HomeworkPage> {
     var bodyObj = jsonDecode(bodyString);
     homeworkList.clear();
     for (Map<String, dynamic> map in bodyObj) {
-      homeworkList.add(Homework.objToHomework(map));
+      Homework homework = Homework.objToHomework(map);
+      homeworkList.add(homework);
+      if (Status.user.type == 1) {
+        //教师不需要在此知道提交次数,加快速度
+        continue;
+      }
+      var response2 = await http.get(
+        Uri.parse(
+          "${Status.baseUrl}/getSubmitCountByUserIdAndHomeworkId?"
+          "userId=${Status.user.id}&homeworkId=${homework.id}",
+        ),
+      );
+      String bodyString2 = utf8.decode(response2.bodyBytes);
+      int submitCount = int.parse(bodyString2);
+      submitCountList.add(submitCount);
     }
     initSelectedList(false);
     isAllSelected = false;
@@ -211,7 +226,9 @@ class _HomeworkPageState extends State<HomeworkPage> {
           ),
           DataCell(
             Text(
-              homework.count.toString(),
+              Status.user.type == 0
+                  ? "${submitCountList[i]} / ${homework.count}"
+                  : "${homework.count}",
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 20,
@@ -221,7 +238,40 @@ class _HomeworkPageState extends State<HomeworkPage> {
           DataCell(
             Row(
               mainAxisSize: MainAxisSize.min,
-              children: [],
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    "查看作业",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                if (Status.user.type == 1)
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      "作业统计",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                if (Status.user.type == 0)
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      "完成作业",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ),
         ],
