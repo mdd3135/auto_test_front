@@ -66,6 +66,135 @@ class _HomeworkPageState extends State<HomeworkPage> {
             ),
           ),
         ),
+        Positioned(
+          top: 20,
+          child: Row(
+            children: [
+              ElevatedButton(
+                onPressed: () {},
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    "添加作业",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 20),
+              ElevatedButton(
+                onPressed: () {},
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    "删除所选",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+          bottom: 20,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              DropdownButton(
+                focusColor: Colors.transparent,
+                value: countId,
+                items: const [
+                  DropdownMenuItem(
+                    value: 0,
+                    child: Text(
+                      "10条",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    value: 1,
+                    child: Text(
+                      "20条",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    value: 2,
+                    child: Text(
+                      "50条",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    value: 3,
+                    child: Text(
+                      "100条",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ],
+                onChanged: (value) {
+                  changeCountId(value);
+                },
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              IconButton(
+                onPressed: () {
+                  prePage();
+                },
+                icon: const Icon(
+                  Icons.arrow_left,
+                  size: 30,
+                ),
+              ),
+              Text(
+                "第$currentPage页/共$totalPage页",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  nextPage();
+                },
+                icon: const Icon(
+                  Icons.arrow_right,
+                  size: 30,
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Text(
+                "共$homeworkCount条记录",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                ),
+              )
+            ],
+          ),
+        )
       ],
     );
   }
@@ -279,6 +408,28 @@ class _HomeworkPageState extends State<HomeworkPage> {
       dataRowList.add(row);
     }
     setState(() {});
+  }
+
+  changeCountId(int? value) {
+    countId = value ?? 1;
+    currentPage = 1;
+    initData();
+  }
+
+  prePage() {
+    if (currentPage <= 1) {
+      return;
+    }
+    currentPage--;
+    initData();
+  }
+
+  nextPage() {
+    if (currentPage >= totalPage) {
+      return;
+    }
+    currentPage++;
+    initData();
   }
 
   selected(bool value, int i) {
