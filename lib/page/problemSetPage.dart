@@ -433,7 +433,7 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
           ),
           DataCell(
             Text(
-              dateTime.toString().substring(0, 19),
+              dateTime.toString().substring(0, 16),
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 20,

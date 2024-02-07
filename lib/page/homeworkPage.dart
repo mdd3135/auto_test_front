@@ -344,7 +344,7 @@ class _HomeworkPageState extends State<HomeworkPage> {
           ),
           DataCell(
             Text(
-              createTime.toString().substring(0, 19),
+              createTime.toString().substring(0, 16),
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 20,
@@ -353,7 +353,7 @@ class _HomeworkPageState extends State<HomeworkPage> {
           ),
           DataCell(
             Text(
-              deadline.toString().substring(0, 19),
+              deadline.toString().substring(0, 16),
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 20,

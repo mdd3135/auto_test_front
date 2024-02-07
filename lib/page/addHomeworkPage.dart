@@ -29,7 +29,19 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
         alignment: Alignment.center,
         children: [
           Positioned(
-            bottom: 20,
+            top: 40,
+            child: Center(
+              child: SizedBox(
+                width: 600,
+                height: height - 120,
+                child: SingleChildScrollView(
+                  child: bodyDetail(),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 40,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -61,18 +73,6 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
                   ),
                 ),
               ],
-            ),
-          ),
-          Positioned(
-            top: 40,
-            child: Center(
-              child: SizedBox(
-                width: 600,
-                height: height - 120,
-                child: SingleChildScrollView(
-                  child: bodyDetail(),
-                ),
-              ),
             ),
           ),
         ],
@@ -126,7 +126,7 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
                   startTimePressed();
                 },
                 child: Text(
-                  startTime.toString().substring(0, 19),
+                  startTime.toString().substring(0, 16),
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
@@ -139,6 +139,35 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
         ),
         const SizedBox(
           height: 20,
+        ),
+        ShadowContainer(
+          child: Row(
+            children: [
+              const Text(
+                "作业结束时间：",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const Expanded(
+                child: Text(""),
+              ),
+              TextButton(
+                onPressed: () {
+                  deadlinePressed();
+                },
+                child: Text(
+                  deadline.toString().substring(0, 16),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.end,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -158,10 +187,35 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
         initialTime: TimeOfDay.fromDateTime(startTime),
       ).then((timeOfDay) {
         if (timeOfDay != null && dateTime != null) {
-          dateTime = dateTime!.add(
+          startTime = dateTime.add(
             Duration(hours: timeOfDay.hour, minutes: timeOfDay.minute),
           );
-          startTime = dateTime!;
+        }
+        if (startTime.compareTo(deadline) > 0) {
+          deadline = startTime;
+        }
+        setState(() {});
+      });
+    });
+  }
+
+  deadlinePressed() async {
+    showDatePicker(
+      context: context,
+      initialDate: deadline,
+      firstDate: startTime,
+      lastDate: deadline.add(
+        const Duration(days: 365),
+      ),
+    ).then((dateTime) async {
+      showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.fromDateTime(deadline),
+      ).then((timeOfDay) {
+        if (timeOfDay != null && dateTime != null) {
+          deadline = dateTime.add(
+            Duration(hours: timeOfDay.hour, minutes: timeOfDay.minute),
+          );
         }
         setState(() {});
       });
