@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_test_front/entity/homework.dart';
+import 'package:auto_test_front/page/addHomeworkPage.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +73,9 @@ class _HomeworkPageState extends State<HomeworkPage> {
             child: Row(
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    addHomeworkPressed();
+                  },
                   child: Container(
                     padding: const EdgeInsets.all(10),
                     child: const Text(
@@ -482,6 +485,16 @@ class _HomeworkPageState extends State<HomeworkPage> {
         );
       }
     }
+  }
+
+  addHomeworkPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) {
+          return const AddHomeworkPage();
+        },
+      ),
+    );
   }
 
   changeCountId(int? value) {

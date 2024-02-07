@@ -6,8 +6,8 @@ import 'package:auto_test_front/page/settingPage.dart';
 import 'package:auto_test_front/page/stuManPage.dart';
 import 'package:auto_test_front/page/homeworkPage.dart';
 import 'package:auto_test_front/status.dart';
+import 'package:auto_test_front/widget/myAppBar.dart';
 import 'package:flutter/material.dart';
-import 'package:window_manager/window_manager.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -26,33 +26,10 @@ class _HomePageState extends State<HomePage> {
       appTitle += "教师端";
     }
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          appTitle,
-          style: const TextStyle(fontWeight: FontWeight.w500),
-        ),
-        leading: const Icon(Icons.checklist),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: [
-          IconButton(
-            onPressed: () {
-              windowManager.minimize();
-            },
-            icon: const Icon(Icons.remove),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          IconButton(
-            onPressed: () {
-              windowManager.close();
-            },
-            icon: const Icon(Icons.close),
-          ),
-          const SizedBox(
-            width: 10,
-          )
-        ],
+      appBar: const MyAppBar().build(
+        context,
+        appTitle,
+        const Icon(Icons.checklist),
       ),
       body: Row(
         children: [

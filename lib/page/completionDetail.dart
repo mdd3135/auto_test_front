@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:auto_test_front/entity/completion.dart';
 import 'package:auto_test_front/entity/itemBank.dart';
 import 'package:auto_test_front/status.dart';
+import 'package:auto_test_front/widget/myAppBar.dart';
 import 'package:auto_test_front/widget/shadowContainer.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:window_manager/window_manager.dart';
 import 'package:http/http.dart' as http;
 
 class CompletionDetail extends StatefulWidget {
@@ -30,32 +30,10 @@ class _CompletionDetailState extends State<CompletionDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "题目详情",
-          style: TextStyle(fontWeight: FontWeight.w500),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: [
-          IconButton(
-            onPressed: () {
-              windowManager.minimize();
-            },
-            icon: const Icon(Icons.remove),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          IconButton(
-            onPressed: () {
-              windowManager.close();
-            },
-            icon: const Icon(Icons.close),
-          ),
-          const SizedBox(
-            width: 10,
-          )
-        ],
+      appBar: const MyAppBar().build(
+        context,
+        "题目详情",
+        null,
       ),
       body: SingleChildScrollView(
         child: Center(
