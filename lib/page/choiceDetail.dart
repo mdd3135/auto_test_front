@@ -38,7 +38,10 @@ class _ChoiceDetailState extends State<ChoiceDetail> {
       ),
       body: SingleChildScrollView(
         child: Center(
-          child: SizedBox(child: detailBody(), width: 800),
+          child: SizedBox(
+            child: detailBody(),
+            width: 800,
+          ),
         ),
       ),
     );

@@ -26,28 +26,31 @@ class _ModifyScoreDialogState extends State<ModifyScoreDialog> {
         "修改分值",
         style: TextStyle(fontWeight: FontWeight.w500),
       ),
-      content: TextFormField(
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(40)),
-          ),
-          label: Text(
-            "新的分值",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
+      content: Container(
+        margin: const EdgeInsets.only(top: 10),
+        child: TextFormField(
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            label: Text(
+              "新的分值",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
+          textAlign: TextAlign.center,
+          initialValue: scoreString,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+          onChanged: (value) {
+            scoreString = value;
+          },
         ),
-        textAlign: TextAlign.center,
-        initialValue: scoreString,
-        style: const TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
-        ),
-        onChanged: (value) {
-          scoreString = value;
-        },
       ),
       actions: <Widget>[
         TextButton(

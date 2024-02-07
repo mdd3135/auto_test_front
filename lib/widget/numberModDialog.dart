@@ -25,28 +25,31 @@ class _NumberModDialogState extends State<NumberModDialog> {
         "修改学号",
         style: TextStyle(fontWeight: FontWeight.w500),
       ),
-      content: TextFormField(
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(40)),
-          ),
-          label: Text(
-            "新学号",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
+      content: Container(
+        margin: const EdgeInsets.only(top: 10),
+        child: TextFormField(
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            label: Text(
+              "新学号",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
+          textAlign: TextAlign.center,
+          initialValue: number,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+          onChanged: (value) {
+            number = value;
+          },
         ),
-        textAlign: TextAlign.center,
-        initialValue: number,
-        style: const TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
-        ),
-        onChanged: (value) {
-          number = value;
-        },
       ),
       actions: <Widget>[
         TextButton(

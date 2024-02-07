@@ -86,7 +86,9 @@ class _LoginPageState extends State<LoginPage> {
                   initialValue: name,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(40)),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
                     ),
                     label: Text(
                       "用户名",
@@ -110,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                   initialValue: pwd,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(40)),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                     label: Text(
                       "密码",
@@ -185,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
     BotToast.closeAllLoading();
     if (bodyString == "") {
       BotToast.showText(text: "登录失败，请检查用户名和密码");
-    } else { 
+    } else {
       var body = jsonDecode(bodyString);
       Status.user = User.objToUser(body);
       Status.user.pwd = pwd;

@@ -20,13 +20,13 @@ class _PwdModDialogState extends State<PwdModDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 10),
           TextFormField(
             decoration: const InputDecoration(
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(40)),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
               ),
               label: Text(
                 "原密码",
@@ -52,7 +52,9 @@ class _PwdModDialogState extends State<PwdModDialog> {
           TextFormField(
             decoration: const InputDecoration(
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(40)),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
               ),
               label: Text(
                 "新密码",
