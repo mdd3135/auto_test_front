@@ -37,11 +37,11 @@ class _HomeworkPageState extends State<HomeworkPage> {
       alignment: Alignment.topCenter,
       children: [
         Positioned(
-          top: 80,
+          top: Status.user.type == 1 ? 80 : 20,
           child: Container(
             constraints: BoxConstraints(
-              maxHeight: height - 220,
-              minHeight: height - 220,
+              maxHeight: Status.user.type == 1 ? height - 220 : height - 160,
+              minHeight: Status.user.type == 1 ? height - 220 : height - 160,
             ),
             decoration: BoxDecoration(
               border: Border.symmetric(
@@ -66,40 +66,43 @@ class _HomeworkPageState extends State<HomeworkPage> {
             ),
           ),
         ),
-        Positioned(
-          top: 20,
-          child: Row(
-            children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  child: const Text(
-                    "添加作业",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
+        if (Status.user.type == 1)
+          Positioned(
+            top: 20,
+            child: Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    child: const Text(
+                      "添加作业",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 20),
-              ElevatedButton(
-                onPressed: () {},
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  child: const Text(
-                    "删除所选",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
+                const SizedBox(width: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    deleteSelectedPressed();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    child: const Text(
+                      "删除所选",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
         Positioned(
           bottom: 20,
           child: Row(
@@ -317,6 +320,7 @@ class _HomeworkPageState extends State<HomeworkPage> {
         int.parse(homework.deadline),
       );
       DataRow row = DataRow(
+        selected: isSelectedList[i],
         cells: [
           DataCell(
             Checkbox(
@@ -408,6 +412,76 @@ class _HomeworkPageState extends State<HomeworkPage> {
       dataRowList.add(row);
     }
     setState(() {});
+  }
+
+  deleteSelectedPressed() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text(
+            "警告",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: const Text(
+            "该操作不可恢复！是否要删除所选作业？",
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 20,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text(
+                "取消",
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: const Text(
+                "确定",
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                ),
+              ),
+            )
+          ],
+        );
+      },
+    ).then((value) async {
+      if (value == null || value == false) {
+        return;
+      }
+      BotToast.showLoading();
+      await deleteConfirm();
+      currentPage = 1;
+      await initData();
+      BotToast.showText(text: "删除作业成功");
+    });
+  }
+
+  deleteConfirm() async {
+    for (int i = 0; i < isSelectedList.length; i++) {
+      if (isSelectedList[i]) {
+        int id = homeworkList[i].id;
+        await http.post(
+          Uri.parse("${Status.baseUrl}/removeHomeworkById"),
+          body: {"id": id.toString()},
+        );
+      }
+    }
   }
 
   changeCountId(int? value) {

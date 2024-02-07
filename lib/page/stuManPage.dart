@@ -527,7 +527,7 @@ class _StuManPageState extends State<StuManPage> {
         );
       },
     ).then((value) async {
-      if (value == false) {
+      if (value == null || value == false) {
         return;
       }
       BotToast.showLoading();
