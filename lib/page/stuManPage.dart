@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:auto_test_front/entity/user.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/classroomModDialog.dart';
+import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:auto_test_front/widget/numberModDialog.dart';
 import 'package:auto_test_front/widget/resetPwdDialog.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -81,12 +82,9 @@ class _StuManPageState extends State<StuManPage> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  child: const Text(
+                  child: Text(
                     "批量导入",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
+                    style: MyTextStyle.textStyle,
                   ),
                 ),
               ),
@@ -100,12 +98,9 @@ class _StuManPageState extends State<StuManPage> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  child: const Text(
+                  child: Text(
                     "删除所选",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
+                    style: MyTextStyle.textStyle,
                   ),
                 ),
               ),
@@ -117,12 +112,9 @@ class _StuManPageState extends State<StuManPage> {
                 onPressed: () {},
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  child: const Text(
+                  child: Text(
                     "全部导出",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
+                    style: MyTextStyle.textStyle,
                   ),
                 ),
               )
@@ -137,45 +129,33 @@ class _StuManPageState extends State<StuManPage> {
               DropdownButton(
                 focusColor: Colors.transparent,
                 value: countId,
-                items: const [
+                items: [
                   DropdownMenuItem(
                     value: 0,
                     child: Text(
                       "10条",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                   DropdownMenuItem(
                     value: 1,
                     child: Text(
                       "20条",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                   DropdownMenuItem(
                     value: 2,
                     child: Text(
                       "50条",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                   DropdownMenuItem(
                     value: 3,
                     child: Text(
                       "100条",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                 ],
@@ -197,10 +177,7 @@ class _StuManPageState extends State<StuManPage> {
               ),
               Text(
                 "第$currentPage页/共$totalPage页",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               ),
               IconButton(
                 onPressed: () {
@@ -216,10 +193,7 @@ class _StuManPageState extends State<StuManPage> {
               ),
               Text(
                 "共$stuCount条记录",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               )
             ],
           ),
@@ -346,10 +320,7 @@ class _StuManPageState extends State<StuManPage> {
           DataCell(
             Text(
               user.name,
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-              ),
+              style: MyTextStyle.textStyle,
             ),
           ),
           DataCell(
@@ -359,10 +330,7 @@ class _StuManPageState extends State<StuManPage> {
               },
               child: Text(
                 user.number,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             ),
           ),
@@ -373,22 +341,16 @@ class _StuManPageState extends State<StuManPage> {
               },
               child: Text(
                 user.classroom,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             ),
           ),
           DataCell(
             TextButton(
               onPressed: () {},
-              child: const Text(
+              child: Text(
                 "查看",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             ),
           ),
@@ -397,12 +359,9 @@ class _StuManPageState extends State<StuManPage> {
               onPressed: () {
                 resetPwdPressed(user.name);
               },
-              child: const Text(
+              child: Text(
                 "重置密码",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             ),
           ),
@@ -491,36 +450,27 @@ class _StuManPageState extends State<StuManPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          content: const Text(
+          content: Text(
             "该操作不可恢复！是否要删除所选学生？",
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 20,
-            ),
+            style: MyTextStyle.textStyle,
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
-              child: const Text(
+              child: Text(
                 "取消",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
-              child: const Text(
+              child: Text(
                 "确定",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             )
           ],

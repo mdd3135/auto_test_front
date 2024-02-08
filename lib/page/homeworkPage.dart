@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:auto_test_front/entity/homework.dart';
 import 'package:auto_test_front/page/addHomeworkPage.dart';
 import 'package:auto_test_front/status.dart';
+import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -78,12 +79,9 @@ class _HomeworkPageState extends State<HomeworkPage> {
                   },
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                    child: const Text(
+                    child: Text(
                       "添加作业",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                 ),
@@ -94,12 +92,9 @@ class _HomeworkPageState extends State<HomeworkPage> {
                   },
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                    child: const Text(
+                    child: Text(
                       "删除所选",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                 ),
@@ -114,45 +109,33 @@ class _HomeworkPageState extends State<HomeworkPage> {
               DropdownButton(
                 focusColor: Colors.transparent,
                 value: countId,
-                items: const [
+                items: [
                   DropdownMenuItem(
                     value: 0,
                     child: Text(
                       "10条",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                   DropdownMenuItem(
                     value: 1,
                     child: Text(
                       "20条",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                   DropdownMenuItem(
                     value: 2,
                     child: Text(
                       "50条",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                   DropdownMenuItem(
                     value: 3,
                     child: Text(
                       "100条",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                 ],
@@ -174,10 +157,7 @@ class _HomeworkPageState extends State<HomeworkPage> {
               ),
               Text(
                 "第$currentPage页/共$totalPage页",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               ),
               IconButton(
                 onPressed: () {
@@ -193,10 +173,7 @@ class _HomeworkPageState extends State<HomeworkPage> {
               ),
               Text(
                 "共$homeworkCount条记录",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               )
             ],
           ),
@@ -336,28 +313,19 @@ class _HomeworkPageState extends State<HomeworkPage> {
           DataCell(
             Text(
               homework.homeworkName,
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-              ),
+              style: MyTextStyle.textStyle,
             ),
           ),
           DataCell(
             Text(
               createTime.toString().substring(0, 16),
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-              ),
+              style: MyTextStyle.textStyle,
             ),
           ),
           DataCell(
             Text(
               deadline.toString().substring(0, 16),
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-              ),
+              style: MyTextStyle.textStyle,
             ),
           ),
           DataCell(
@@ -365,10 +333,7 @@ class _HomeworkPageState extends State<HomeworkPage> {
               Status.user.type == 0
                   ? "${submitCountList[i]} / ${homework.count}"
                   : "${homework.count}",
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-              ),
+              style: MyTextStyle.textStyle,
             ),
           ),
           DataCell(
@@ -377,34 +342,25 @@ class _HomeworkPageState extends State<HomeworkPage> {
               children: [
                 TextButton(
                   onPressed: () {},
-                  child: const Text(
+                  child: Text(
                     "查看作业",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
+                    style: MyTextStyle.textStyle,
                   ),
                 ),
                 if (Status.user.type == 1)
                   TextButton(
                     onPressed: () {},
-                    child: const Text(
+                    child: Text(
                       "作业统计",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                 if (Status.user.type == 0)
                   TextButton(
                     onPressed: () {},
-                    child: const Text(
+                    child: Text(
                       "完成作业",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
               ],
@@ -422,42 +378,31 @@ class _HomeworkPageState extends State<HomeworkPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text(
+          title: Text(
             "警告",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
-          content: const Text(
+          content: Text(
             "该操作不可恢复！是否要删除所选作业？",
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 20,
-            ),
+            style: MyTextStyle.textStyle,
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
-              child: const Text(
+              child: Text(
                 "取消",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
-              child: const Text(
+              child: Text(
                 "确定",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             )
           ],

@@ -9,6 +9,7 @@ import 'package:auto_test_front/page/shortAnswerPage.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/modDescriptionDialog.dart';
 import 'package:auto_test_front/widget/modifyScoreDialog.dart';
+import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -84,12 +85,9 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  child: const Text(
+                  child: Text(
                     "导入选择题",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
+                    style: MyTextStyle.textStyle,
                   ),
                 ),
               ),
@@ -103,12 +101,9 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  child: const Text(
+                  child: Text(
                     "导入填空题",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
+                    style: MyTextStyle.textStyle,
                   ),
                 ),
               ),
@@ -122,12 +117,9 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  child: const Text(
+                  child: Text(
                     "导入简答题",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
+                    style: MyTextStyle.textStyle,
                   ),
                 ),
               ),
@@ -141,12 +133,9 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  child: const Text(
+                  child: Text(
                     "导入编程题",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
+                    style: MyTextStyle.textStyle,
                   ),
                 ),
               ),
@@ -160,12 +149,9 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  child: const Text(
+                  child: Text(
                     "删除所选",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
+                    style: MyTextStyle.textStyle,
                   ),
                 ),
               ),
@@ -177,12 +163,9 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
                 onPressed: () {},
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  child: const Text(
+                  child: Text(
                     "全部导出",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    ),
+                    style: MyTextStyle.textStyle,
                   ),
                 ),
               )
@@ -197,45 +180,33 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
               DropdownButton(
                 focusColor: Colors.transparent,
                 value: countId,
-                items: const [
+                items: [
                   DropdownMenuItem(
                     value: 0,
                     child: Text(
                       "10条",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                   DropdownMenuItem(
                     value: 1,
                     child: Text(
                       "20条",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                   DropdownMenuItem(
                     value: 2,
                     child: Text(
                       "50条",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                   DropdownMenuItem(
                     value: 3,
                     child: Text(
                       "100条",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                 ],
@@ -257,10 +228,7 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
               ),
               Text(
                 "第$currentPage页/共$totalPage页",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               ),
               IconButton(
                 onPressed: () {
@@ -276,10 +244,7 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
               ),
               Text(
                 "共$itemBankCount条记录",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               )
             ],
           ),
@@ -411,10 +376,7 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
           DataCell(
             Text(
               type,
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-              ),
+              style: MyTextStyle.textStyle,
             ),
           ),
           DataCell(
@@ -424,20 +386,14 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
               },
               child: Text(
                 itemBank.description,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             ),
           ),
           DataCell(
             Text(
               dateTime.toString().substring(0, 16),
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-              ),
+              style: MyTextStyle.textStyle,
             ),
           ),
           DataCell(
@@ -447,10 +403,7 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
               },
               child: Text(
                 itemBank.score.toString(),
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             ),
           ),
@@ -459,12 +412,9 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
               onPressed: () {
                 onDetailPressed(itemBank);
               },
-              child: const Text(
+              child: Text(
                 "查看",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             ),
           ),
@@ -525,36 +475,27 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          content: const Text(
+          content: Text(
             "该操作不可恢复！是否要删除所选题目？",
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 20,
-            ),
+            style: MyTextStyle.textStyle,
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
-              child: const Text(
+              child: Text(
                 "取消",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
-              child: const Text(
+              child: Text(
                 "确定",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             )
           ],

@@ -1,4 +1,5 @@
 import 'package:auto_test_front/status.dart';
+import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:auto_test_front/widget/themeDropdownbtn.dart';
 import 'package:flutter/material.dart';
 
@@ -18,13 +19,10 @@ class _SettingPageState extends State<SettingPage> {
         const Expanded(flex: 1, child: Text("")),
         Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
                 "深色模式",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             ),
             Switch(
@@ -36,30 +34,24 @@ class _SettingPageState extends State<SettingPage> {
           ],
         ),
         const SizedBox(height: 20),
-        const Row(
+        Row(
           children: [
             Expanded(
               child: Text(
                 "主题选择",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             ),
-            ThemeDropDownbtn(),
+            const ThemeDropDownbtn(),
           ],
         ),
         const SizedBox(height: 20),
         Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
                 "记住我",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             ),
             Switch(
@@ -77,9 +69,9 @@ class _SettingPageState extends State<SettingPage> {
           },
           child: Container(
             padding: const EdgeInsets.all(10),
-            child: const Text(
+            child: Text(
               "关于系统",
-              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+              style: MyTextStyle.textStyle,
             ),
           ),
         ),
@@ -111,7 +103,9 @@ class _SettingPageState extends State<SettingPage> {
       children: [
         const Text(
           "毛旦旦的毕业设计，使用Spring Boot构建后端，使用MySQL数据库，使用Flutter构建客户端",
-          style: TextStyle(fontSize: 20,),
+          style: TextStyle(
+            fontSize: 20,
+          ),
         ),
       ],
     );

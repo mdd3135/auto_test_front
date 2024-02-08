@@ -1,4 +1,5 @@
 import 'package:auto_test_front/status.dart';
+import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:flutter/material.dart';
 
 class ThemeDropDownbtn extends StatefulWidget {
@@ -9,11 +10,10 @@ class ThemeDropDownbtn extends StatefulWidget {
 }
 
 class _ThemeDropDownbtnState extends State<ThemeDropDownbtn> {
-
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
-      focusColor:Colors.transparent,
+      focusColor: Colors.transparent,
       items: [
         DropdownMenuItem(
           value: 0,
@@ -26,12 +26,9 @@ class _ThemeDropDownbtnState extends State<ThemeDropDownbtn> {
                 color: Colors.red,
               ),
               const SizedBox(width: 10),
-              const Text(
+              Text(
                 "红",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: MyTextStyle.textStyle,
               )
             ],
           ),
@@ -47,12 +44,9 @@ class _ThemeDropDownbtnState extends State<ThemeDropDownbtn> {
                 color: Colors.purple,
               ),
               const SizedBox(width: 10),
-              const Text(
+              Text(
                 "紫",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: MyTextStyle.textStyle,
               )
             ],
           ),
@@ -68,12 +62,9 @@ class _ThemeDropDownbtnState extends State<ThemeDropDownbtn> {
                 color: Colors.blue,
               ),
               const SizedBox(width: 10),
-              const Text(
+              Text(
                 "蓝",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: MyTextStyle.textStyle,
               )
             ],
           ),
@@ -89,12 +80,9 @@ class _ThemeDropDownbtnState extends State<ThemeDropDownbtn> {
                 color: Colors.cyan,
               ),
               const SizedBox(width: 10),
-              const Text(
+              Text(
                 "青",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: MyTextStyle.textStyle,
               )
             ],
           ),
@@ -110,12 +98,9 @@ class _ThemeDropDownbtnState extends State<ThemeDropDownbtn> {
                 color: Colors.teal,
               ),
               const SizedBox(width: 10),
-              const Text(
+              Text(
                 "茶",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: MyTextStyle.textStyle,
               )
             ],
           ),
@@ -131,12 +116,9 @@ class _ThemeDropDownbtnState extends State<ThemeDropDownbtn> {
                 color: Colors.green,
               ),
               const SizedBox(width: 10),
-              const Text(
+              Text(
                 "绿",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: MyTextStyle.textStyle,
               )
             ],
           ),
@@ -152,12 +134,9 @@ class _ThemeDropDownbtnState extends State<ThemeDropDownbtn> {
                 color: Colors.orange,
               ),
               const SizedBox(width: 10),
-              const Text(
+              Text(
                 "橙",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: MyTextStyle.textStyle,
               )
             ],
           ),

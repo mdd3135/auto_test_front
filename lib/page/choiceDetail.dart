@@ -4,6 +4,7 @@ import 'package:auto_test_front/entity/choice.dart';
 import 'package:auto_test_front/entity/itemBank.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/myAppBar.dart';
+import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:auto_test_front/widget/shadowContainer.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
@@ -58,19 +59,13 @@ class _ChoiceDetailState extends State<ChoiceDetail> {
       ),
       Row(
         children: [
-          const Text(
+          Text(
             "题目类型：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
           Text(
             "选择题（$subType）",
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
@@ -79,33 +74,24 @@ class _ChoiceDetailState extends State<ChoiceDetail> {
       ),
       Row(
         children: [
-          const Text(
+          Text(
             "分值：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
           Text(
             widget.itemBank.score.toString(),
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
       const SizedBox(
         height: 20,
       ),
-      const Row(
+      Row(
         children: [
           Text(
             "题目描述：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
@@ -115,23 +101,17 @@ class _ChoiceDetailState extends State<ChoiceDetail> {
       ShadowContainer(
         child: Text(
           widget.itemBank.description,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
+          style: MyTextStyle.textStyle,
         ),
       ),
       const SizedBox(
         height: 20,
       ),
-      const Row(
+      Row(
         children: [
           Text(
             "题目内容：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
@@ -141,23 +121,17 @@ class _ChoiceDetailState extends State<ChoiceDetail> {
       ShadowContainer(
         child: Text(
           choice.content,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
+          style: MyTextStyle.textStyle,
         ),
       ),
       const SizedBox(
         height: 20,
       ),
-      const Row(
+      Row(
         children: [
           Text(
             "选项：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
@@ -189,11 +163,7 @@ class _ChoiceDetailState extends State<ChoiceDetail> {
                 child: Text(
                   "$key：${optionMap[key]}",
                   textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
+                  style: MyTextStyle.textStyle,
                 ),
               ),
               if (isTrue)
@@ -216,14 +186,11 @@ class _ChoiceDetailState extends State<ChoiceDetail> {
         const SizedBox(
           height: 20,
         ),
-        const Row(
+        Row(
           children: [
             Text(
               "解析：",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: MyTextStyle.textStyle,
             ),
           ],
         ),
@@ -233,10 +200,7 @@ class _ChoiceDetailState extends State<ChoiceDetail> {
         ShadowContainer(
           child: Text(
             choice.analysis,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ),
         const SizedBox(

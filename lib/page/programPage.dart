@@ -4,6 +4,7 @@ import 'package:auto_test_front/entity/itemBank.dart';
 import 'package:auto_test_front/entity/program.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/myAppBar.dart';
+import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:auto_test_front/widget/shadowContainer.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
@@ -55,21 +56,15 @@ class _ProgramPageState extends State<ProgramPage> {
       const SizedBox(
         height: 40,
       ),
-      const Row(
+      Row(
         children: [
           Text(
             "题目类型：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
           Text(
             "编程题",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
@@ -78,19 +73,13 @@ class _ProgramPageState extends State<ProgramPage> {
       ),
       Row(
         children: [
-          const Text(
+          Text(
             "分值：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
           Text(
             widget.itemBank.score.toString(),
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
@@ -99,33 +88,24 @@ class _ProgramPageState extends State<ProgramPage> {
       ),
       Row(
         children: [
-          const Text(
+          Text(
             "编程语言：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
           Text(
             program.language,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
       const SizedBox(
         height: 20,
       ),
-      const Row(
+      Row(
         children: [
           Text(
             "题目描述：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
@@ -135,23 +115,17 @@ class _ProgramPageState extends State<ProgramPage> {
       ShadowContainer(
         child: Text(
           widget.itemBank.description,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
+          style: MyTextStyle.textStyle,
         ),
       ),
       const SizedBox(
         height: 20,
       ),
-      const Row(
+      Row(
         children: [
           Text(
             "题目内容：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
@@ -161,10 +135,7 @@ class _ProgramPageState extends State<ProgramPage> {
       ShadowContainer(
         child: Text(
           program.content,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
+          style: MyTextStyle.textStyle,
         ),
       ),
       const SizedBox(
@@ -287,10 +258,7 @@ class _ProgramPageState extends State<ProgramPage> {
         ShadowContainer(
           child: Text(
             program.analysis,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ),
         const SizedBox(

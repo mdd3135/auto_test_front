@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:auto_test_front/entity/user.dart';
 import 'package:auto_test_front/status.dart';
+import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:auto_test_front/widget/pwdModDialog.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:crypto/crypto.dart';
@@ -26,23 +27,12 @@ class _MyPageState extends State<MyPage> {
         ),
         Row(
           children: [
-            const Text(
-              "身份：",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            Text("身份：", style: MyTextStyle.textStyle),
             const Expanded(
               child: Text(""),
             ),
-            Text(
-              Status.user.type == 0 ? "学生" : "教师",
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            Text(Status.user.type == 0 ? "学生" : "教师",
+                style: MyTextStyle.textStyle),
           ],
         ),
         const SizedBox(
@@ -50,23 +40,11 @@ class _MyPageState extends State<MyPage> {
         ),
         Row(
           children: [
-            const Text(
-              "姓名：",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            Text("姓名：", style: MyTextStyle.textStyle),
             const Expanded(
               child: Text(""),
             ),
-            Text(
-              Status.user.name,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            Text(Status.user.name, style: MyTextStyle.textStyle),
           ],
         ),
         const SizedBox(
@@ -74,23 +52,12 @@ class _MyPageState extends State<MyPage> {
         ),
         Row(
           children: [
-            const Text(
-              "学号：",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            Text("学号：", style: MyTextStyle.textStyle),
             const Expanded(
               child: Text(""),
             ),
-            Text(
-              Status.user.number == "" ? "无" : Status.user.number,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            Text(Status.user.number == "" ? "无" : Status.user.number,
+                style: MyTextStyle.textStyle),
           ],
         ),
         const SizedBox(
@@ -98,23 +65,12 @@ class _MyPageState extends State<MyPage> {
         ),
         Row(
           children: [
-            const Text(
-              "班级：",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            Text("班级：", style: MyTextStyle.textStyle),
             const Expanded(
               child: Text(""),
             ),
-            Text(
-              Status.user.classroom == "" ? "无" : Status.user.classroom,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            Text(Status.user.classroom == "" ? "无" : Status.user.classroom,
+                style: MyTextStyle.textStyle),
           ],
         ),
         const SizedBox(
@@ -123,24 +79,18 @@ class _MyPageState extends State<MyPage> {
         Status.user.type == 0
             ? Row(
                 children: [
-                  const Text(
+                  Text(
                     "成绩分析：",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: MyTextStyle.textStyle,
                   ),
                   const Expanded(
                     child: Text(""),
                   ),
                   TextButton(
                     onPressed: () {},
-                    child: const Text(
+                    child: Text(
                       "查看",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                 ],
@@ -156,12 +106,9 @@ class _MyPageState extends State<MyPage> {
           },
           child: Container(
             padding: const EdgeInsets.all(10),
-            child: const Text(
+            child: Text(
               "修改密码",
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-              ),
+              style: MyTextStyle.textStyle,
             ),
           ),
         ),
@@ -174,9 +121,9 @@ class _MyPageState extends State<MyPage> {
           },
           child: Container(
             padding: const EdgeInsets.all(10),
-            child: const Text(
+            child: Text(
               "退出登录",
-              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+              style: MyTextStyle.textStyle,
             ),
           ),
         ),

@@ -1,6 +1,8 @@
+import 'package:auto_test_front/entity/itemBank.dart';
+import 'package:auto_test_front/page/selectItemPage.dart';
 import 'package:auto_test_front/widget/myAppBar.dart';
+import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:auto_test_front/widget/shadowContainer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddHomeworkPage extends StatefulWidget {
@@ -15,10 +17,10 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
   DateTime deadline = DateTime.now().add(
     const Duration(days: 3),
   );
+  List<ItemBank> itemBankList = [];
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: const MyAppBar().build(
         context,
@@ -32,11 +34,8 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
             top: 40,
             child: Center(
               child: SizedBox(
-                width: 600,
-                height: height - 120,
-                child: SingleChildScrollView(
-                  child: bodyDetail(),
-                ),
+                width: 400,
+                child: bodyDetail(),
               ),
             ),
           ),
@@ -46,15 +45,14 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                    child: const Text(
+                    child: Text(
                       "取消",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                 ),
@@ -63,12 +61,9 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
                   onPressed: () {},
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                    child: const Text(
+                    child: Text(
                       "确认",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                 ),
@@ -82,93 +77,120 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
 
   bodyDetail() {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        TextFormField(
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(20),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                "作业名称：",
+                style: MyTextStyle.textStyle,
               ),
             ),
-            label: Text(
-              "作业名称",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
+            Expanded(
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.all(10),
+                ),
+                textAlign: TextAlign.center,
+                style: MyTextStyle.textStyle,
+                onChanged: (value) {},
               ),
             ),
-          ),
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
-          onChanged: (value) {},
+          ],
         ),
         const SizedBox(
           height: 20,
         ),
-        ShadowContainer(
-          child: Row(
-            children: [
-              const Text(
-                "作业开始时间：",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
+        Row(
+          children: [
+            Text(
+              "作业开始时间：",
+              style: MyTextStyle.textStyle,
+            ),
+            const Expanded(
+              child: Text(""),
+            ),
+            TextButton(
+              onPressed: () {
+                startTimePressed();
+              },
+              child: Text(
+                startTime.toString().substring(0, 16),
+                style: MyTextStyle.textStyle,
+                textAlign: TextAlign.end,
               ),
-              const Expanded(
-                child: Text(""),
-              ),
-              TextButton(
-                onPressed: () {
-                  startTimePressed();
-                },
-                child: Text(
-                  startTime.toString().substring(0, 16),
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.end,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
         const SizedBox(
           height: 20,
         ),
-        ShadowContainer(
-          child: Row(
-            children: [
-              const Text(
-                "作业结束时间：",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
+        Row(
+          children: [
+            Text(
+              "作业结束时间：",
+              style: MyTextStyle.textStyle,
+            ),
+            const Expanded(
+              child: Text(""),
+            ),
+            TextButton(
+              onPressed: () {
+                deadlinePressed();
+              },
+              child: Text(
+                deadline.toString().substring(0, 16),
+                style: MyTextStyle.textStyle,
+                textAlign: TextAlign.end,
               ),
-              const Expanded(
-                child: Text(""),
-              ),
-              TextButton(
-                onPressed: () {
-                  deadlinePressed();
-                },
-                child: Text(
-                  deadline.toString().substring(0, 16),
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.end,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
+        const SizedBox(height: 20),
+        Row(
+          children: [
+            Text(
+              "选择题目：",
+              style: MyTextStyle.textStyle,
+            ),
+            const Expanded(
+              child: Text(""),
+            ),
+            TextButton(
+              onPressed: () {
+                selectItemPressed();
+              },
+              child: Text(
+                "共 ${itemBankList.length} 题",
+                style: MyTextStyle.textStyle,
+                textAlign: TextAlign.end,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+        ShadowContainer(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxHeight: 400),
+            child: ListView.builder(
+              itemCount: itemBankList.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: Text(
+                    itemBankList[index].type.toString(),
+                    style: MyTextStyle.textStyle,
+                  ),
+                );
+              },
+            ),
+          ),
+        )
       ],
     );
   }
@@ -219,6 +241,22 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
         }
         setState(() {});
       });
+    });
+  }
+
+  selectItemPressed() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return const SelectItemPage();
+      }),
+    ).then((value) {
+      if (value == null) {
+        return;
+      }
+      Set<ItemBank> itemBankSet = value;
+      itemBankList = itemBankSet.toList();
+      setState(() {});
     });
   }
 }

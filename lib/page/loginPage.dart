@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:auto_test_front/entity/user.dart';
 import 'package:auto_test_front/status.dart';
+import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
@@ -84,25 +85,19 @@ class _LoginPageState extends State<LoginPage> {
                 const Expanded(child: Text("")),
                 TextFormField(
                   initialValue: name,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
                       ),
                     ),
                     label: Text(
                       "用户名",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: MyTextStyle.textStyle,
                   onChanged: (value) {
                     name = value;
                   },
@@ -110,24 +105,18 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 40, child: Text("")),
                 TextFormField(
                   initialValue: pwd,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                     label: Text(
                       "密码",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                   obscureText: true,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: MyTextStyle.textStyle,
                   onChanged: (value) {
                     pwd = value;
                   },
@@ -139,12 +128,9 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                    child: const Text(
+                    child: Text(
                       "登录",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                 ),
@@ -155,12 +141,9 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                    child: const Text(
+                    child: Text(
                       "退出",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: MyTextStyle.textStyle,
                     ),
                   ),
                 ),

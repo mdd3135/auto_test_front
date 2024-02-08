@@ -1,3 +1,4 @@
+import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:flutter/material.dart';
 
 class ModDescriptionDialog extends StatefulWidget {
@@ -28,26 +29,20 @@ class _ModDescriptionDialogState extends State<ModDescriptionDialog> {
       content: Container(
         margin: const EdgeInsets.only(top: 10),
         child: TextFormField(
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(20),
               ),
             ),
             label: Text(
               "新的题目描述",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
+              style: MyTextStyle.textStyle,
             ),
           ),
           textAlign: TextAlign.center,
           initialValue: description,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
+          style: MyTextStyle.textStyle,
           onChanged: (value) {
             description = value;
           },
@@ -55,24 +50,18 @@ class _ModDescriptionDialogState extends State<ModDescriptionDialog> {
       ),
       actions: <Widget>[
         TextButton(
-          child: const Text(
+          child: Text(
             "取消",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
           ),
           onPressed: () {
             Navigator.of(context).pop({"isModify": false});
           },
         ),
         TextButton(
-          child: const Text(
+          child: Text(
             "确定",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
           ),
           onPressed: () {
             Navigator.of(context).pop(

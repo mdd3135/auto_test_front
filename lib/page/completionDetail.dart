@@ -4,6 +4,7 @@ import 'package:auto_test_front/entity/completion.dart';
 import 'package:auto_test_front/entity/itemBank.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/myAppBar.dart';
+import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:auto_test_front/widget/shadowContainer.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
@@ -54,21 +55,15 @@ class _CompletionDetailState extends State<CompletionDetail> {
       const SizedBox(
         height: 40,
       ),
-      const Row(
+      Row(
         children: [
           Text(
             "题目类型：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
           Text(
             "填空题",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
@@ -77,33 +72,24 @@ class _CompletionDetailState extends State<CompletionDetail> {
       ),
       Row(
         children: [
-          const Text(
+          Text(
             "分值：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
           Text(
             widget.itemBank.score.toString(),
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
       const SizedBox(
         height: 20,
       ),
-      const Row(
+      Row(
         children: [
           Text(
             "题目描述：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
@@ -113,23 +99,17 @@ class _CompletionDetailState extends State<CompletionDetail> {
       ShadowContainer(
         child: Text(
           widget.itemBank.description,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
+          style: MyTextStyle.textStyle,
         ),
       ),
       const SizedBox(
         height: 20,
       ),
-      const Row(
+      Row(
         children: [
           Text(
             "题目内容：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
@@ -139,10 +119,7 @@ class _CompletionDetailState extends State<CompletionDetail> {
       ShadowContainer(
         child: Text(
           completion.content,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
+          style: MyTextStyle.textStyle,
         ),
       ),
     ];
@@ -172,10 +149,7 @@ class _CompletionDetailState extends State<CompletionDetail> {
           ShadowContainer(
             child: Text(
               answer,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
+              style: MyTextStyle.textStyle,
             ),
           ),
         ],
@@ -202,10 +176,7 @@ class _CompletionDetailState extends State<CompletionDetail> {
           ShadowContainer(
             child: Text(
               completion.analysis,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
+              style: MyTextStyle.textStyle,
             ),
           ),
           const SizedBox(

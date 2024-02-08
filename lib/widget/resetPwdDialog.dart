@@ -1,3 +1,4 @@
+import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:flutter/material.dart';
 
 class ResetPwdDialog extends StatefulWidget {
@@ -17,36 +18,27 @@ class _ResetPwdDialogState extends State<ResetPwdDialog> {
           fontWeight: FontWeight.bold,
         ),
       ),
-      content: const Text(
+      content: Text(
         "是否要重置该学生密码",
-        style: TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 20,
-        ),
+        style: MyTextStyle.textStyle,
       ),
       actions: [
         TextButton(
           onPressed: () {
             Navigator.of(context).pop(false);
           },
-          child: const Text(
+          child: Text(
             "取消",
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 20,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ),
         TextButton(
           onPressed: () {
             Navigator.of(context).pop(true);
           },
-          child: const Text(
+          child: Text(
             "确定",
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 20,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         )
       ],

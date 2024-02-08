@@ -4,6 +4,7 @@ import 'package:auto_test_front/entity/itemBank.dart';
 import 'package:auto_test_front/entity/shortAnswer.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/myAppBar.dart';
+import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:auto_test_front/widget/shadowContainer.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
@@ -55,21 +56,15 @@ class _ShortAnswerPageState extends State<ShortAnswerPage> {
       const SizedBox(
         height: 40,
       ),
-      const Row(
+      Row(
         children: [
           Text(
             "题目类型：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
           Text(
             "简答题",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
@@ -78,33 +73,24 @@ class _ShortAnswerPageState extends State<ShortAnswerPage> {
       ),
       Row(
         children: [
-          const Text(
+          Text(
             "分值：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
           Text(
             widget.itemBank.score.toString(),
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
       const SizedBox(
         height: 20,
       ),
-      const Row(
+      Row(
         children: [
           Text(
             "题目描述：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
@@ -114,23 +100,17 @@ class _ShortAnswerPageState extends State<ShortAnswerPage> {
       ShadowContainer(
         child: Text(
           widget.itemBank.description,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
+          style: MyTextStyle.textStyle,
         ),
       ),
       const SizedBox(
         height: 20,
       ),
-      const Row(
+      Row(
         children: [
           Text(
             "题目内容：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
@@ -140,23 +120,17 @@ class _ShortAnswerPageState extends State<ShortAnswerPage> {
       ShadowContainer(
         child: Text(
           shortAnswer.content,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
+          style: MyTextStyle.textStyle,
         ),
       ),
       const SizedBox(
         height: 20,
       ),
-      const Row(
+      Row(
         children: [
           Text(
             "题目答案：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
@@ -166,23 +140,17 @@ class _ShortAnswerPageState extends State<ShortAnswerPage> {
       ShadowContainer(
         child: Text(
           shortAnswer.answer,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
+          style: MyTextStyle.textStyle,
         ),
       ),
       const SizedBox(
         height: 20,
       ),
-      const Row(
+      Row(
         children: [
           Text(
             "解析：",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: MyTextStyle.textStyle,
           ),
         ],
       ),
@@ -192,10 +160,7 @@ class _ShortAnswerPageState extends State<ShortAnswerPage> {
       ShadowContainer(
         child: Text(
           shortAnswer.analysis,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
+          style: MyTextStyle.textStyle,
         ),
       ),
       const SizedBox(

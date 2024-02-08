@@ -1,3 +1,4 @@
+import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:flutter/material.dart';
 
 class PwdModDialog extends StatefulWidget {
@@ -22,26 +23,20 @@ class _PwdModDialogState extends State<PwdModDialog> {
         children: [
           const SizedBox(height: 10),
           TextFormField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(20),
                 ),
               ),
               label: Text(
                 "原密码",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             ),
             obscureText: true,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
             onChanged: (value) {
               oldPwd = value;
             },
@@ -50,26 +45,20 @@ class _PwdModDialogState extends State<PwdModDialog> {
             height: 20,
           ),
           TextFormField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(20),
                 ),
               ),
               label: Text(
                 "新密码",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: MyTextStyle.textStyle,
               ),
             ),
             obscureText: true,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
             onChanged: (value) {
               newPwd = value;
             },
@@ -78,24 +67,18 @@ class _PwdModDialogState extends State<PwdModDialog> {
       ),
       actions: <Widget>[
         TextButton(
-          child: const Text(
+          child: Text(
             "取消",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
           ),
           onPressed: () {
             Navigator.of(context).pop({"isModify": false});
           },
         ),
         TextButton(
-          child: const Text(
+          child: Text(
             "确定",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
+            style: MyTextStyle.textStyle,
           ),
           onPressed: () {
             Navigator.of(context).pop({
