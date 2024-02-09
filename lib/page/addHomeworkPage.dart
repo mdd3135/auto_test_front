@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:auto_test_front/entity/itemBank.dart';
 import 'package:auto_test_front/page/selectItemPage.dart';
+import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/myAppBar.dart';
 import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:auto_test_front/widget/shadowContainer.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class AddHomeworkPage extends StatefulWidget {
   const AddHomeworkPage({super.key});
@@ -18,6 +23,9 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
     const Duration(days: 3),
   );
   List<ItemBank> itemBankList = [];
+  String homeworkName = "";
+  String countString = "2";
+  int count = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +66,9 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
                 ),
                 const SizedBox(width: 20),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    addHomeworkPressed();
+                  },
                   child: Container(
                     padding: const EdgeInsets.all(10),
                     child: Text(
@@ -97,9 +107,11 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
                   ),
                   contentPadding: EdgeInsets.all(10),
                 ),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.end,
                 style: MyTextStyle.textStyle,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  homeworkName = value;
+                },
               ),
             ),
           ],
@@ -107,6 +119,36 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
         const SizedBox(
           height: 20,
         ),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                "可提交次数：",
+                style: MyTextStyle.textStyle,
+              ),
+            ),
+            Expanded(
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.all(10),
+                ),
+                textAlign: TextAlign.end,
+                style: MyTextStyle.textStyle,
+                onChanged: (value) {
+                  countString = value;
+                },
+                initialValue: countString,
+                keyboardType: TextInputType.number,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
         Row(
           children: [
             Text(
@@ -181,9 +223,28 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
             child: ListView.builder(
               itemCount: itemBankList.length,
               itemBuilder: (context, index) {
+                ItemBank itemBank = itemBankList[index];
+                String type = "";
+                if (itemBank.type == 1) {
+                  type = "选择题";
+                } else if (itemBank.type == 2) {
+                  type = "填空题";
+                } else if (itemBank.type == 3) {
+                  type = "简答题";
+                } else if (itemBank.type == 4) {
+                  type = "编程题";
+                }
                 return ListTile(
                   leading: Text(
-                    itemBankList[index].type.toString(),
+                    type,
+                    style: MyTextStyle.textStyle,
+                  ),
+                  title: Text(
+                    itemBank.description,
+                    style: MyTextStyle.textStyle,
+                  ),
+                  trailing: Text(
+                    itemBank.score.toStringAsFixed(1),
                     style: MyTextStyle.textStyle,
                   ),
                 );
@@ -258,5 +319,30 @@ class _AddHomeworkPageState extends State<AddHomeworkPage> {
       itemBankList = itemBankSet.toList();
       setState(() {});
     });
+  }
+
+  addHomeworkPressed() {
+    try {
+      count = int.parse(countString);
+    } catch (e) {
+      BotToast.showText(text: "可提交次数必须是整数，请重新输入");
+      return;
+    }
+    BotToast.showLoading();
+    Set<int> itemIdSet = {};
+    for (int i = 0; i < itemBankList.length; i++) {
+      itemIdSet.add(itemBankList[i].id);
+    }
+    http.post(
+      Uri.parse("${Status.baseUrl}/addHomework"),
+      body: {
+        "startTime": startTime.millisecondsSinceEpoch.toString(),
+        "deadline": deadline.millisecondsSinceEpoch.toString(),
+        "homeworkName": homeworkName,
+        "item": jsonEncode(itemIdSet.toList()),
+        "count": count.toString(),
+      },
+    );
+    Navigator.pop(context, true);
   }
 }

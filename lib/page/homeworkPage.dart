@@ -439,7 +439,13 @@ class _HomeworkPageState extends State<HomeworkPage> {
           return const AddHomeworkPage();
         },
       ),
-    );
+    ).then((value) {
+      if (value == null || value != true) {
+        return;
+      }
+      initData();
+      BotToast.showText(text: "添加作业成功");
+    });
   }
 
   changeCountId(int? value) {
