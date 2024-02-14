@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:auto_test_front/entity/homework.dart';
 import 'package:auto_test_front/page/addHomeworkPage.dart';
+import 'package:auto_test_front/page/homeworkDetailPage.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -341,7 +342,9 @@ class _HomeworkPageState extends State<HomeworkPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    homeworkDetailPressed(homework);
+                  },
                   child: Text(
                     "查看作业",
                     style: MyTextStyle.textStyle,
@@ -446,6 +449,14 @@ class _HomeworkPageState extends State<HomeworkPage> {
       initData();
       BotToast.showText(text: "添加作业成功");
     });
+  }
+
+  homeworkDetailPressed(Homework homework) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) {
+        return HomeworkDetailPage(homework: homework);
+      }),
+    );
   }
 
   changeCountId(int? value) {
