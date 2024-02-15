@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_test_front/page/favorite.dart';
 import 'package:auto_test_front/page/myPage.dart';
 import 'package:auto_test_front/page/problemSetPage.dart';
 import 'package:auto_test_front/page/settingPage.dart';
@@ -68,6 +69,10 @@ class _HomePageState extends State<HomePage> {
                 label: Text('作业'),
               ),
               const NavigationRailDestination(
+                icon: Icon(Icons.favorite),
+                label: Text("题目收藏"),
+              ),
+              const NavigationRailDestination(
                 icon: Icon(Icons.person),
                 label: Text('我的'),
               ),
@@ -130,6 +135,8 @@ class _GeneratorPageState extends State<GeneratorPage> {
     } else if (Status.pageId == 3) {
       return const HomeworkPage();
     } else if (Status.pageId == 4) {
+      return const FavoritePage();
+    } else if (Status.pageId == 5) {
       return const SizedBox(
         width: 400,
         child: MyPage(),

@@ -65,12 +65,15 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
               ),
             ),
             child: SingleChildScrollView(
-              child: DataTable(
-                border: TableBorder.all(
-                  color: Theme.of(context).colorScheme.onBackground,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+                  border: TableBorder.all(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+                  columns: dataColumn(),
+                  rows: dataRowList,
                 ),
-                columns: dataColumn(),
-                rows: dataRowList,
               ),
             ),
           ),
