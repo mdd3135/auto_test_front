@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:auto_test_front/entity/homework.dart';
 import 'package:auto_test_front/page/addHomeworkPage.dart';
+import 'package:auto_test_front/page/completeHomeworkPage.dart';
 import 'package:auto_test_front/page/homeworkDetailPage.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/myTextStyle.dart';
@@ -360,7 +361,9 @@ class _HomeworkPageState extends State<HomeworkPage> {
                   ),
                 if (Status.user.type == 0)
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      completeHomeworkPressed(homework);
+                    },
                     child: Text(
                       "完成作业",
                       style: MyTextStyle.textStyle,
@@ -455,6 +458,14 @@ class _HomeworkPageState extends State<HomeworkPage> {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
         return HomeworkDetailPage(homework: homework);
+      }),
+    );
+  }
+
+  completeHomeworkPressed(Homework homework) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) {
+        return CompleteHomeworkPage(homework: homework);
       }),
     );
   }

@@ -68,9 +68,10 @@ class _HomePageState extends State<HomePage> {
                 icon: Icon(Icons.edit_document),
                 label: Text('作业'),
               ),
-              const NavigationRailDestination(
-                icon: Icon(Icons.favorite),
-                label: Text("题目收藏"),
+              NavigationRailDestination(
+                icon: const Icon(Icons.favorite),
+                label: const Text("题目收藏"),
+                disabled: Status.user.type == 1 ? true : false,
               ),
               const NavigationRailDestination(
                 icon: Icon(Icons.person),
