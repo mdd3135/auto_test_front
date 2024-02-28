@@ -7,6 +7,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -93,6 +94,15 @@ class _MyMaterialAppState extends State<MyMaterialApp> {
         useMaterial3: true,
       ),
       home: const MainPage(),
+        supportedLocales: const [
+        Locale('en', 'US'), // English
+        Locale('zh', 'CH'), // Chinese
+      ],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       debugShowCheckedModeBanner: false,
       navigatorObservers: [BotToastNavigatorObserver()],
       builder: BotToastInit(),
