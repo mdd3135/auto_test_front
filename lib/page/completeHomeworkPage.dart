@@ -76,6 +76,11 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
     if (submitCount >= widget.homework.count) {
       BotToast.showText(text: "已用完提交次数，因此本次提交不计入总成绩");
     }
+    if (widget.homework.deadline
+            .compareTo(DateTime.now().millisecondsSinceEpoch.toString()) <
+        0) {
+      BotToast.showText(text: "已超过截止时间，因此本次提交不计入总成绩");
+    }
     await initItem(itemBankList[0]);
     BotToast.closeAllLoading();
   }

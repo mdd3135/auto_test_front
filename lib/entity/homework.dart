@@ -1,6 +1,7 @@
 class Homework {
   int id;
   String createTime;
+  String startTime;
   String deadline;
   String homeworkName;
   int count;
@@ -8,6 +9,7 @@ class Homework {
   Homework(
     this.id,
     this.createTime,
+    this.startTime,
     this.deadline,
     this.homeworkName,
     this.count,
@@ -17,6 +19,7 @@ class Homework {
     return Homework(
       map["id"],
       map["createTime"],
+      map["startTime"],
       map["deadline"],
       map["homeworkName"],
       map["count"],

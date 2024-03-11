@@ -295,8 +295,8 @@ class _HomeworkPageState extends State<HomeworkPage> {
     dataRowList.clear();
     for (int i = 0; i < homeworkList.length; i++) {
       Homework homework = homeworkList[i];
-      DateTime createTime = DateTime.fromMillisecondsSinceEpoch(
-        int.parse(homework.createTime),
+      DateTime startTime = DateTime.fromMillisecondsSinceEpoch(
+        int.parse(homework.startTime),
       );
       DateTime deadline = DateTime.fromMillisecondsSinceEpoch(
         int.parse(homework.deadline),
@@ -320,7 +320,7 @@ class _HomeworkPageState extends State<HomeworkPage> {
           ),
           DataCell(
             Text(
-              createTime.toString().substring(0, 16),
+              startTime.toString().substring(0, 16),
               style: MyTextStyle.textStyle,
             ),
           ),
@@ -455,6 +455,10 @@ class _HomeworkPageState extends State<HomeworkPage> {
   }
 
   homeworkDetailPressed(Homework homework) {
+    if (homework.startTime.compareTo(DateTime.now().millisecond.toString()) >
+        0) {
+      BotToast.showText(text: "未到开始时间，请在开始时间后再完成作业");
+    }
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
         return HomeworkDetailPage(homework: homework);
