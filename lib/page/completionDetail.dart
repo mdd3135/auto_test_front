@@ -154,37 +154,37 @@ class _CompletionDetailState extends State<CompletionDetail> {
           ),
         ],
       );
-      columns.addAll(
-        [
-          const SizedBox(
-            height: 20,
-          ),
-          const Row(
-            children: [
-              Text(
-                "解析：",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          ShadowContainer(
-            child: Text(
-              completion.analysis,
-              style: MyTextStyle.textStyle,
-            ),
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-        ],
-      );
     }
+    columns.addAll(
+      [
+        const SizedBox(
+          height: 20,
+        ),
+        const Row(
+          children: [
+            Text(
+              "解析：",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        ShadowContainer(
+          child: Text(
+            completion.analysis,
+            style: MyTextStyle.textStyle,
+          ),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+      ],
+    );
     return Column(
       children: columns,
     );
