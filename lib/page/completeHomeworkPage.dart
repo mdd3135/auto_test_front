@@ -4,6 +4,10 @@ import 'package:auto_test_front/entity/homework.dart';
 import 'package:auto_test_front/entity/homeworkItem.dart';
 import 'package:auto_test_front/entity/itemBank.dart';
 import 'package:auto_test_front/status.dart';
+import 'package:auto_test_front/widget/completeChoice.dart';
+import 'package:auto_test_front/widget/completeCompletion.dart';
+import 'package:auto_test_front/widget/completeProgram.dart';
+import 'package:auto_test_front/widget/completeShortAnswer.dart';
 import 'package:auto_test_front/widget/myAppBar.dart';
 import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -81,13 +85,15 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
         0) {
       BotToast.showText(text: "已超过截止时间，因此本次提交不计入总成绩");
     }
-    await initItem(itemBankList[0]);
+    ok = 1;
     BotToast.closeAllLoading();
   }
 
-  initItem(ItemBank itemBank) async {}
-
   bodyDetail() {
+    if (ok != 1) {
+      return;
+    }
+    ItemBank itemBank = itemBankList[currentItem - 1];
     return Column(
       children: [
         const SizedBox(height: 20),
@@ -103,8 +109,72 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
               style: MyTextStyle.textStyle,
             ),
           ],
+        ),
+        const SizedBox(height: 20),
+        if (itemBank.type == 1)
+          CompleteChoice(itemBank: itemBank)
+        else if (itemBank.type == 2)
+          CompleteCompletion(itemBank: itemBank)
+        else if (itemBank.type == 3)
+          CompleteShortAnswer(itemBank: itemBank)
+        else
+          CompleteProgram(itemBank: itemBank),
+        const SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                preItem();
+              },
+              child: Text(
+                "上一题",
+                style: MyTextStyle.textStyle,
+              ),
+            ),
+            const SizedBox(width: 20),
+            ElevatedButton(
+              onPressed: () {
+                nextItem();
+              },
+              child: Text(
+                "下一题",
+                style: MyTextStyle.textStyle,
+              ),
+            ),
+            const SizedBox(width: 20),
+            ElevatedButton(
+              onPressed: () {
+                submit();
+              },
+              child: Text(
+                "提交",
+                style: MyTextStyle.textStyle,
+              ),
+            )
+          ],
         )
       ],
     );
   }
+
+  preItem() {
+    if (currentItem <= 1) {
+      BotToast.showText(text: "已经是第一题了");
+      return;
+    }
+    currentItem--;
+    setState(() {});
+  }
+
+  nextItem() {
+    if (currentItem >= itemBankList.length) {
+      BotToast.showText(text: "已经是最后一题了");
+      return;
+    }
+    currentItem++;
+    setState(() {});
+  }
+
+  submit() {}
 }

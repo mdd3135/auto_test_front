@@ -938,6 +938,7 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
 
   prePage() {
     if (currentPage <= 1) {
+      BotToast.showText(text: "已经是第一页了");
       return;
     }
     currentPage--;
@@ -946,6 +947,7 @@ class _ProblemSetPageState extends State<ProblemSetPage> {
 
   nextPage() {
     if (currentPage >= totalPage) {
+      BotToast.showText(text: "已经是最后一页了");
       return;
     }
     currentPage++;
