@@ -455,10 +455,6 @@ class _HomeworkPageState extends State<HomeworkPage> {
   }
 
   homeworkDetailPressed(Homework homework) {
-    if (homework.startTime.compareTo(DateTime.now().millisecond.toString()) >
-        0) {
-      BotToast.showText(text: "未到开始时间，请在开始时间后再完成作业");
-    }
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
         return HomeworkDetailPage(homework: homework);
@@ -467,6 +463,12 @@ class _HomeworkPageState extends State<HomeworkPage> {
   }
 
   completeHomeworkPressed(Homework homework) {
+    if (homework.startTime
+            .compareTo(DateTime.now().millisecondsSinceEpoch.toString()) >
+        0) {
+      BotToast.showText(text: "未到开始时间，请在开始时间后再完成作业");
+      return;
+    }
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
         return CompleteHomeworkPage(homework: homework);
