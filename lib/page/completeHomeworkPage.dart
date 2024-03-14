@@ -95,7 +95,7 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
       return;
     }
     ItemBank itemBank = itemBankList[currentItem - 1];
-    return Column(
+    return ListView(
       children: [
         const SizedBox(height: 20),
         Row(
@@ -115,9 +115,13 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
         if (itemBank.type == 1)
           CompleteChoice(
             itemBank: itemBank,
+            idx: currentItem - 1,
           )
         else if (itemBank.type == 2)
-          CompleteCompletion(itemBank: itemBank, idx: currentItem - 1)
+          CompleteCompletion(
+            itemBank: itemBank,
+            idx: currentItem - 1,
+          )
         else if (itemBank.type == 3)
           CompleteShortAnswer(itemBank: itemBank)
         else

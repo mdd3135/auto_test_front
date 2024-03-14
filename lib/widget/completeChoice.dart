@@ -11,9 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class CompleteChoice extends StatefulWidget {
-  const CompleteChoice({super.key, required this.itemBank});
+  const CompleteChoice({super.key, required this.itemBank, required this.idx});
 
   final ItemBank itemBank;
+  final int idx;
 
   @override
   State<CompleteChoice> createState() => _CompleteChoiceState();
@@ -197,17 +198,24 @@ class _CompleteChoiceState extends State<CompleteChoice> {
   }
 
   initData() async {
-    itemId = widget.itemBank.id;
     BotToast.showLoading();
-    var response = await http.get(
-      Uri.parse(
-        "${Status.baseUrl}/getChoiceById?id=${widget.itemBank.questionId}",
-      ),
-    );
-    String bodyString = utf8.decode(response.bodyBytes);
-    Map<String, dynamic> map = json.decode(bodyString);
-    choice = Choice.objToChoice(map);
-    choice.answer = "[]";
+    itemId = widget.itemBank.id;
+    if (Status.completeHomework.length > widget.idx) {
+      //已经存在题目
+      choice = Status.completeHomework[widget.idx];
+    } else {
+      //初始化这道题目
+      var response = await http.get(
+        Uri.parse(
+          "${Status.baseUrl}/getChoiceById?id=${widget.itemBank.questionId}",
+        ),
+      );
+      String bodyString = utf8.decode(response.bodyBytes);
+      Map<String, dynamic> map = json.decode(bodyString);
+      choice = Choice.objToChoice(map);
+      choice.answer = "[]";
+      Status.completeHomework.add(choice);
+    }
     ok = 1;
     BotToast.closeAllLoading();
     setState(() {});
@@ -225,6 +233,7 @@ class _CompleteChoiceState extends State<CompleteChoice> {
       }
       choice.answer = jsonEncode(answerList);
     }
+    Status.completeHomework[widget.idx] = choice;
     setState(() {});
   }
 }

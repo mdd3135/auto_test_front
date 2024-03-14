@@ -53,7 +53,7 @@ class _CompleteCompletionState extends State<CompleteCompletion> {
       return Container();
     }
     List<Widget> columns = [
-      const SizedBox(height: 40),
+      const SizedBox(height: 20),
       Row(
         children: [
           Text(
