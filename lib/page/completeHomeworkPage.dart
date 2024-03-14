@@ -50,6 +50,7 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
 
   initData() async {
     BotToast.showLoading();
+    Status.completeHomework.clear();
     var response = await http.get(
       Uri.parse(
         "${Status.baseUrl}/getHomeworkItemByHomeworkId?homeworkId=${widget.homework.id}",
@@ -112,9 +113,11 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
         ),
         const SizedBox(height: 20),
         if (itemBank.type == 1)
-          CompleteChoice(itemBank: itemBank)
+          CompleteChoice(
+            itemBank: itemBank,
+          )
         else if (itemBank.type == 2)
-          CompleteCompletion(itemBank: itemBank)
+          CompleteCompletion(itemBank: itemBank, idx: currentItem - 1)
         else if (itemBank.type == 3)
           CompleteShortAnswer(itemBank: itemBank)
         else

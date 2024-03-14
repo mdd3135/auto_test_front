@@ -10,4 +10,5 @@ class Status {
   static bool isDark = false;
   static bool isRememberMe = false;
   static late SharedPreferences prefs;
+  static List<dynamic> completeHomework = [];
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:auto_test_front/entity/choice.dart';
@@ -21,11 +22,27 @@ class CompleteChoice extends StatefulWidget {
 class _CompleteChoiceState extends State<CompleteChoice> {
   int ok = 0;
   late Choice choice;
+  late Timer timer;
+  int itemId = 0;
 
   @override
   void initState() {
     super.initState();
     initData();
+    timer = Timer.periodic(
+      const Duration(milliseconds: 100),
+      (timer) {
+        if (itemId != widget.itemBank.id) {
+          initData();
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    timer.cancel();
   }
 
   @override
@@ -180,6 +197,7 @@ class _CompleteChoiceState extends State<CompleteChoice> {
   }
 
   initData() async {
+    itemId = widget.itemBank.id;
     BotToast.showLoading();
     var response = await http.get(
       Uri.parse(
