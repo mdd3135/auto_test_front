@@ -153,7 +153,7 @@ class _ProgramPageState extends State<ProgramPage> {
                 "样例输入${i + 1}：",
                 style: const TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                   fontFamily: "nomo",
                 ),
               ),
@@ -166,7 +166,7 @@ class _ProgramPageState extends State<ProgramPage> {
                 "样例输出${i + 1}：",
                 style: const TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                   fontFamily: "nomo",
                 ),
               ),
@@ -220,7 +220,7 @@ class _ProgramPageState extends State<ProgramPage> {
               "题目答案：",
               style: TextStyle(
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],
@@ -247,7 +247,7 @@ class _ProgramPageState extends State<ProgramPage> {
               "解析：",
               style: TextStyle(
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],

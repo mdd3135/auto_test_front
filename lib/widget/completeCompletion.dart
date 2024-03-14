@@ -129,7 +129,7 @@ class _CompleteCompletionState extends State<CompleteCompletion> {
                 "第${i + 1}空答案",
                 style: const TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],

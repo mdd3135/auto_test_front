@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:auto_test_front/entity/itemBank.dart';
@@ -10,9 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class CompleteShortAnswer extends StatefulWidget {
-  const CompleteShortAnswer({super.key, required this.itemBank});
+  const CompleteShortAnswer(
+      {super.key, required this.itemBank, required this.idx});
 
   final ItemBank itemBank;
+  final int idx;
 
   @override
   State<CompleteShortAnswer> createState() => _CompleteShortAnswerState();
@@ -21,10 +24,21 @@ class CompleteShortAnswer extends StatefulWidget {
 class _CompleteShortAnswerState extends State<CompleteShortAnswer> {
   int ok = 0;
   late ShortAnswer shortAnswer;
+  int itemId = 0;
+  late Timer timer;
+  late TextEditingController controller;
 
   @override
   void initState() {
     super.initState();
+    timer = Timer.periodic(
+      const Duration(milliseconds: 100),
+      (timer) {
+        if (itemId != widget.itemBank.id) {
+          initData();
+        }
+      },
+    );
     initData();
   }
 
@@ -107,22 +121,62 @@ class _CompleteShortAnswerState extends State<CompleteShortAnswer> {
       const SizedBox(
         height: 20,
       ),
+      Row(
+        children: [
+          Text(
+            "题目答案：",
+            style: MyTextStyle.textStyle,
+          ),
+        ],
+      ),
+      const SizedBox(
+        height: 5,
+      ),
+      ShadowContainer(
+        child: TextFormField(
+          maxLines: 10,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              gapPadding: 0,
+            ),
+          ),
+          style: MyTextStyle.textStyle,
+          controller: controller,
+          onChanged: (value) {
+            updateAnswer(value);
+          },
+        ),
+      ),
     ];
     return Column(
       children: columns,
     );
   }
 
+  updateAnswer(String text) {
+    shortAnswer.answer = text;
+    Status.completeHomework[widget.idx] = shortAnswer;
+  }
+
   initData() async {
     BotToast.showLoading();
-    var response = await http.get(
-      Uri.parse(
-        "${Status.baseUrl}/getShortAnswerById?id=${widget.itemBank.questionId}",
-      ),
-    );
-    String bodyString = utf8.decode(response.bodyBytes);
-    Map<String, dynamic> map = json.decode(bodyString);
-    shortAnswer = ShortAnswer.objToShortAnswer(map);
+    itemId = widget.itemBank.id;
+    if (Status.completeHomework.length > widget.idx) {
+      shortAnswer = Status.completeHomework[widget.idx];
+    } else {
+      var response = await http.get(
+        Uri.parse(
+          "${Status.baseUrl}/getShortAnswerById?id=${widget.itemBank.questionId}",
+        ),
+      );
+      String bodyString = utf8.decode(response.bodyBytes);
+      Map<String, dynamic> map = json.decode(bodyString);
+      shortAnswer = ShortAnswer.objToShortAnswer(map);
+      shortAnswer.answer = "";
+      Status.completeHomework.add(shortAnswer);
+    }
+    controller = TextEditingController(text: shortAnswer.answer);
     ok = 1;
     BotToast.closeAllLoading();
     setState(() {});

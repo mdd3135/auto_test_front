@@ -96,6 +96,7 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
     }
     ItemBank itemBank = itemBankList[currentItem - 1];
     return ListView(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       children: [
         const SizedBox(height: 20),
         Row(
@@ -123,9 +124,15 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
             idx: currentItem - 1,
           )
         else if (itemBank.type == 3)
-          CompleteShortAnswer(itemBank: itemBank)
+          CompleteShortAnswer(
+            itemBank: itemBank,
+            idx: currentItem - 1,
+          )
         else
-          CompleteProgram(itemBank: itemBank),
+          CompleteProgram(
+            itemBank: itemBank,
+            idx: currentItem - 1,
+          ),
         const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -160,6 +167,9 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
               ),
             )
           ],
+        ),
+        const SizedBox(
+          height: 20,
         )
       ],
     );

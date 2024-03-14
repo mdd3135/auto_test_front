@@ -138,7 +138,7 @@ class _CompletionDetailState extends State<CompletionDetail> {
                 "第${i + 1}空答案",
                 style: const TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],
@@ -166,7 +166,7 @@ class _CompletionDetailState extends State<CompletionDetail> {
               "解析：",
               style: TextStyle(
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],
