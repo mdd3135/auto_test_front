@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:auto_test_front/entity/homework.dart';
 import 'package:auto_test_front/entity/homeworkItem.dart';
@@ -28,6 +29,7 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
   int ok = 0;
   int currentItem = 1;
   int submitCount = 0;
+  List<int> isfavoriteList = [];
 
   @override
   void initState() {
@@ -70,6 +72,13 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
       );
       ItemBank itemBank = ItemBank.objToItemBank(responseObj2);
       itemBankList.add(itemBank);
+      response = await http.get(
+        Uri.parse(
+          "${Status.baseUrl}/checkCollectByUserIdAndItemId?"
+          "userId=${Status.user.id}&itemId=${itemBank.id}",
+        ),
+      );
+      isfavoriteList.add(jsonDecode(utf8.decode(response.bodyBytes)));
     }
     response = await http.get(
       Uri.parse(
@@ -110,6 +119,19 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
               "可提交 $submitCount/${widget.homework.count} 次",
               style: MyTextStyle.textStyle,
             ),
+            const Expanded(child: Text("")),
+            IconButton(
+              onPressed: () {
+                onFavoritePressed(currentItem - 1);
+              },
+              icon: Icon(
+                isfavoriteList[currentItem - 1] == 0
+                    ? Icons.favorite_border
+                    : Icons.favorite,
+                color: Colors.red,
+                size: 30,
+              ),
+            )
           ],
         ),
         const SizedBox(height: 20),
@@ -173,6 +195,31 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
         )
       ],
     );
+  }
+
+  onFavoritePressed(int idx) async {
+    BotToast.showLoading();
+    if (isfavoriteList[idx] == 0) {
+      await http.post(
+        Uri.parse("${Status.baseUrl}/addCollect"),
+        body: {
+          "userId": Status.user.id.toString(),
+          "itemId": itemBankList[idx].id.toString(),
+        },
+      );
+      isfavoriteList[idx] = 1;
+    } else {
+      await http.post(
+        Uri.parse("${Status.baseUrl}/deleteCollectByUserIdAndItemId"),
+        body: {
+          "userId": Status.user.id.toString(),
+          "itemId": itemBankList[idx].id.toString(),
+        },
+      );
+      isfavoriteList[idx] = 0;
+    }
+    setState(() {});
+    BotToast.closeAllLoading();
   }
 
   preItem() {
