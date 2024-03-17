@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:auto_test_front/page/favorite.dart';
+import 'package:auto_test_front/page/favoritePage.dart';
 import 'package:auto_test_front/page/myPage.dart';
 import 'package:auto_test_front/page/problemSetPage.dart';
 import 'package:auto_test_front/page/settingPage.dart';
