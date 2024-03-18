@@ -206,6 +206,7 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
           "itemId": itemBankList[idx].id.toString(),
         },
       );
+      BotToast.showText(text: "收藏题目成功");
       isfavoriteList[idx] = 1;
     } else {
       await http.post(
@@ -215,6 +216,7 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
           "itemId": itemBankList[idx].id.toString(),
         },
       );
+      BotToast.showText(text: "取消收藏题目成功");
       isfavoriteList[idx] = 0;
     }
     setState(() {});

@@ -318,9 +318,13 @@ class _FavoritePageState extends State<FavoritePage> {
   onDetailPressed(ItemBank itemBank) {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
-        return const FavoriteDetailPage();
+        return FavoriteDetailPage(
+          itemBank: itemBank,
+        );
       }),
-    );
+    ).then((value) {
+      initData();
+    });
   }
 
   changeCountId(int? value) {

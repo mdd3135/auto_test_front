@@ -11,4 +11,5 @@ class Status {
   static bool isRememberMe = false;
   static late SharedPreferences prefs;
   static List<dynamic> completeHomework = [];
+  static late dynamic favoriteItem;
 }
