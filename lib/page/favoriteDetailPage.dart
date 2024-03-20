@@ -4,6 +4,7 @@ import 'package:auto_test_front/entity/choice.dart';
 import 'package:auto_test_front/entity/completion.dart';
 import 'package:auto_test_front/entity/itemBank.dart';
 import 'package:auto_test_front/entity/program.dart';
+import 'package:auto_test_front/entity/result.dart';
 import 'package:auto_test_front/entity/shortAnswer.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/favoriteChoice.dart';
@@ -87,7 +88,9 @@ class _FavoriteDetailPageState extends State<FavoriteDetailPage> {
           children: [
             Flexible(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  onSubmitPressed();
+                },
                 child: Text(
                   "提交",
                   style: MyTextStyle.textStyle,
@@ -101,6 +104,27 @@ class _FavoriteDetailPageState extends State<FavoriteDetailPage> {
         ),
       ],
     );
+  }
+
+  onSubmitPressed() async {
+    BotToast.showLoading();
+    ItemBank itemBank = widget.itemBank;
+    Choice choice = Status.favoriteItem;
+    var response = await http.post(
+      Uri.parse("${Status.baseUrl}/submitItem"),
+      body: {
+        "userId": Status.user.id.toString(),
+        "itemId": itemBank.id.toString(),
+        "answer": choice.answer,
+      },
+    );
+    Result result = Result.objToResult(
+      jsonDecode(utf8.decode(response.bodyBytes)),
+    );
+    print(result.score);
+    print("----------");
+    print(result.feedback);
+    BotToast.closeAllLoading();
   }
 
   initData() async {

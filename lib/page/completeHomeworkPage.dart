@@ -158,35 +158,38 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                preItem();
-              },
-              child: Text(
-                "上一题",
-                style: MyTextStyle.textStyle,
+            if (currentItem != 1)
+              ElevatedButton(
+                onPressed: () {
+                  preItem();
+                },
+                child: Text(
+                  "上一题",
+                  style: MyTextStyle.textStyle,
+                ),
               ),
-            ),
             const SizedBox(width: 20),
-            ElevatedButton(
-              onPressed: () {
-                nextItem();
-              },
-              child: Text(
-                "下一题",
-                style: MyTextStyle.textStyle,
+            if (currentItem != itemBankList.length)
+              ElevatedButton(
+                onPressed: () {
+                  nextItem();
+                },
+                child: Text(
+                  "下一题",
+                  style: MyTextStyle.textStyle,
+                ),
               ),
-            ),
             const SizedBox(width: 20),
-            ElevatedButton(
-              onPressed: () {
-                submit();
-              },
-              child: Text(
-                "提交",
-                style: MyTextStyle.textStyle,
-              ),
-            )
+            if (currentItem == itemBankList.length)
+              ElevatedButton(
+                onPressed: () {
+                  submit();
+                },
+                child: Text(
+                  "提交",
+                  style: MyTextStyle.textStyle,
+                ),
+              )
           ],
         ),
         const SizedBox(
