@@ -123,19 +123,6 @@ class _FavoriteDetailPageState extends State<FavoriteDetailPage> {
             height: 20,
           ),
         if (isSubmited == 1)
-          Row(
-            children: [
-              Text(
-                "反馈：",
-                style: MyTextStyle.colorTextStyle,
-              ),
-            ],
-          ),
-        if (isSubmited == 1)
-          const SizedBox(
-            height: 5,
-          ),
-        if (isSubmited == 1)
           ShadowContainer(
             child: Text(
               result.feedback,
@@ -153,13 +140,12 @@ class _FavoriteDetailPageState extends State<FavoriteDetailPage> {
   onSubmitPressed() async {
     BotToast.showLoading();
     ItemBank itemBank = widget.itemBank;
-    Choice choice = Status.favoriteItem;
     var response = await http.post(
       Uri.parse("${Status.baseUrl}/submitItem"),
       body: {
         "userId": Status.user.id.toString(),
         "itemId": itemBank.id.toString(),
-        "answer": choice.answer,
+        "answer": Status.favoriteItem.answer,
       },
     );
     result = Result.objToResult(
