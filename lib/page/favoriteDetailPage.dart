@@ -13,6 +13,7 @@ import 'package:auto_test_front/widget/favoriteProgram.dart';
 import 'package:auto_test_front/widget/favoriteShortAnswer.dart';
 import 'package:auto_test_front/widget/myAppBar.dart';
 import 'package:auto_test_front/widget/myTextStyle.dart';
+import 'package:auto_test_front/widget/shadowContainer.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -28,6 +29,8 @@ class FavoriteDetailPage extends StatefulWidget {
 
 class _FavoriteDetailPageState extends State<FavoriteDetailPage> {
   int ok = 0;
+  int isSubmited = 0;
+  late Result result;
   late Completion completion;
   late Choice choice;
   late ShortAnswer shortAnswer;
@@ -102,6 +105,47 @@ class _FavoriteDetailPageState extends State<FavoriteDetailPage> {
         const SizedBox(
           height: 20,
         ),
+        if (isSubmited == 1)
+          Row(
+            children: [
+              Text(
+                "得分：",
+                style: MyTextStyle.colorTextStyle,
+              ),
+              Text(
+                result.score.toString(),
+                style: MyTextStyle.colorTextStyle,
+              ),
+            ],
+          ),
+        if (isSubmited == 1)
+          const SizedBox(
+            height: 20,
+          ),
+        if (isSubmited == 1)
+          Row(
+            children: [
+              Text(
+                "反馈：",
+                style: MyTextStyle.colorTextStyle,
+              ),
+            ],
+          ),
+        if (isSubmited == 1)
+          const SizedBox(
+            height: 5,
+          ),
+        if (isSubmited == 1)
+          ShadowContainer(
+            child: Text(
+              result.feedback,
+              style: MyTextStyle.colorTextStyle,
+            ),
+          ),
+        if (isSubmited == 1)
+          const SizedBox(
+            height: 20,
+          )
       ],
     );
   }
@@ -118,12 +162,11 @@ class _FavoriteDetailPageState extends State<FavoriteDetailPage> {
         "answer": choice.answer,
       },
     );
-    Result result = Result.objToResult(
+    result = Result.objToResult(
       jsonDecode(utf8.decode(response.bodyBytes)),
     );
-    print(result.score);
-    print("----------");
-    print(result.feedback);
+    isSubmited = 1;
+    setState(() {});
     BotToast.closeAllLoading();
   }
 

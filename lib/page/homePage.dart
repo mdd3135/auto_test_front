@@ -6,6 +6,7 @@ import 'package:auto_test_front/page/problemSetPage.dart';
 import 'package:auto_test_front/page/settingPage.dart';
 import 'package:auto_test_front/page/stuManPage.dart';
 import 'package:auto_test_front/page/homeworkPage.dart';
+import 'package:auto_test_front/page/submitPage.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/myAppBar.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +74,11 @@ class _HomePageState extends State<HomePage> {
                 label: const Text("题目收藏"),
                 disabled: Status.user.type == 1 ? true : false,
               ),
+              NavigationRailDestination(
+                icon: const Icon(Icons.list),
+                label: const Text("提交记录"),
+                disabled: Status.user.type == 1 ? true : false,
+              ),
               const NavigationRailDestination(
                 icon: Icon(Icons.person),
                 label: Text('我的'),
@@ -138,6 +144,8 @@ class _GeneratorPageState extends State<GeneratorPage> {
     } else if (Status.pageId == 4) {
       return const FavoritePage();
     } else if (Status.pageId == 5) {
+      return const SubmitPage();
+    } else if (Status.pageId == 6) {
       return const SizedBox(
         width: 400,
         child: MyPage(),
