@@ -4,6 +4,7 @@ class Submit {
   int homeworkId;
   int itemId;
   int type;
+  String createTime;
 
   Submit(
     this.id,
@@ -11,6 +12,7 @@ class Submit {
     this.homeworkId,
     this.itemId,
     this.type,
+    this.createTime,
   );
 
   static Submit objToSubmit(Map<String, dynamic> map) {
@@ -20,6 +22,7 @@ class Submit {
       map["homeworkId"],
       map["itemId"],
       map["type"],
+      map["createTime"],
     );
   }
 }
