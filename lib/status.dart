@@ -1,3 +1,4 @@
+import 'package:auto_test_front/entity/result.dart';
 import 'package:auto_test_front/entity/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

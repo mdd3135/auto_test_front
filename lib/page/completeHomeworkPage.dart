@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:auto_test_front/entity/homework.dart';
 import 'package:auto_test_front/entity/homeworkItem.dart';
 import 'package:auto_test_front/entity/itemBank.dart';
+import 'package:auto_test_front/entity/result.dart';
+import 'package:auto_test_front/entity/submit.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/completeChoice.dart';
 import 'package:auto_test_front/widget/completeCompletion.dart';
@@ -10,6 +12,7 @@ import 'package:auto_test_front/widget/completeProgram.dart';
 import 'package:auto_test_front/widget/completeShortAnswer.dart';
 import 'package:auto_test_front/widget/myAppBar.dart';
 import 'package:auto_test_front/widget/myTextStyle.dart';
+import 'package:auto_test_front/widget/shadowContainer.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -25,6 +28,8 @@ class CompleteHomeworkPage extends StatefulWidget {
 
 class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
   List<ItemBank> itemBankList = [];
+  List<Result> resultList = [];
+  int isSubmited = 0;
   int ok = 0;
   int currentItem = 1;
   int submitCount = 0;
@@ -52,6 +57,7 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
   initData() async {
     BotToast.showLoading();
     Status.completeHomework.clear();
+    resultList.clear();
     var response = await http.get(
       Uri.parse(
         "${Status.baseUrl}/getHomeworkItemByHomeworkId?homeworkId=${widget.homework.id}",
@@ -155,6 +161,34 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
             idx: currentItem - 1,
           ),
         const SizedBox(height: 20),
+        if (isSubmited == 1)
+          Row(
+            children: [
+              Text(
+                "得分：",
+                style: MyTextStyle.colorTextStyle,
+              ),
+              Text(
+                resultList[currentItem - 1].score.toString(),
+                style: MyTextStyle.colorTextStyle,
+              ),
+            ],
+          ),
+        if (isSubmited == 1)
+          const SizedBox(
+            height: 20,
+          ),
+        if (isSubmited == 1)
+          ShadowContainer(
+            child: Text(
+              resultList[currentItem - 1].feedback,
+              style: MyTextStyle.colorTextStyle,
+            ),
+          ),
+        if (isSubmited == 1)
+          const SizedBox(
+            height: 20,
+          ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -183,7 +217,7 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
             if (currentItem == itemBankList.length)
               ElevatedButton(
                 onPressed: () {
-                  submit();
+                  onSubmitPressed();
                 },
                 child: Text(
                   "提交",
@@ -244,5 +278,74 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
     setState(() {});
   }
 
-  submit() {}
+  onSubmitPressed() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text(
+            "提示",
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          content: Text(
+            "确定要提交这个作业的所有题目吗？",
+            style: MyTextStyle.textStyle,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                "取消",
+                style: MyTextStyle.textStyle,
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                submit();
+              },
+              child: Text(
+                "确定",
+                style: MyTextStyle.textStyle,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  submit() async {
+    BotToast.showLoading();
+    resultList.clear();
+    var response = await http.post(
+      Uri.parse("${Status.baseUrl}/submitHomework"),
+      body: {
+        "userId": Status.user.id.toString(),
+        "homeworkId": widget.homework.id.toString(),
+      },
+    );
+    var bodyObj = jsonDecode(utf8.decode(response.bodyBytes));
+    Submit submit = Submit.objToSubmit(bodyObj);
+    for (int i = 0; i < itemBankList.length; i++) {
+      response = await http.post(
+        Uri.parse("${Status.baseUrl}/submitHomeworkItem"),
+        body: {
+          "answer": Status.completeHomework[i].answer,
+          "submitId": submit.id.toString(),
+          "itemId": itemBankList[i].id.toString(),
+        },
+      );
+      bodyObj = jsonDecode(utf8.decode(response.bodyBytes));
+      Result result = Result.objToResult(bodyObj);
+      resultList.add(result);
+    }
+    isSubmited = 1;
+    setState(() {});
+    BotToast.closeAllLoading();
+  }
 }
