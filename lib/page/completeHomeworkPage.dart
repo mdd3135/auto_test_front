@@ -18,9 +18,16 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class CompleteHomeworkPage extends StatefulWidget {
-  const CompleteHomeworkPage({super.key, required this.homework});
+  const CompleteHomeworkPage({
+    super.key,
+    required this.homework,
+    required this.isSubmited,
+    required this.resultList,
+  });
 
   final Homework homework;
+  final int isSubmited;
+  final List<Result> resultList;
 
   @override
   State<CompleteHomeworkPage> createState() => _CompleteHomeworkPageState();
@@ -44,7 +51,11 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar().build(context, "完成作业", null),
+      appBar: const MyAppBar().build(
+        context,
+        widget.isSubmited == 0 ? "完成作业" : "提交详情",
+        null,
+      ),
       body: Center(
         child: SizedBox(
           width: 800,
@@ -57,7 +68,10 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
   initData() async {
     BotToast.showLoading();
     Status.completeHomework.clear();
-    resultList.clear();
+    isSubmited = widget.isSubmited;
+    if (isSubmited == 1) {
+      resultList = widget.resultList;
+    }
     var response = await http.get(
       Uri.parse(
         "${Status.baseUrl}/getHomeworkItemByHomeworkId?homeworkId=${widget.homework.id}",
@@ -92,12 +106,13 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
       ),
     );
     submitCount = int.parse(utf8.decode(response.bodyBytes));
-    if (submitCount >= widget.homework.count) {
+    if (isSubmited == 0 && submitCount >= widget.homework.count) {
       BotToast.showText(text: "已用完提交次数，因此本次提交不计入总成绩");
     }
-    if (widget.homework.deadline
-            .compareTo(DateTime.now().millisecondsSinceEpoch.toString()) <
-        0) {
+    if (isSubmited == 0 &&
+        widget.homework.deadline
+                .compareTo(DateTime.now().millisecondsSinceEpoch.toString()) <
+            0) {
       BotToast.showText(text: "已超过截止时间，因此本次提交不计入总成绩");
     }
     ok = 1;
@@ -214,7 +229,7 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
                 ),
               ),
             const SizedBox(width: 20),
-            if (currentItem == itemBankList.length)
+            if (currentItem == itemBankList.length && isSubmited == 0)
               ElevatedButton(
                 onPressed: () {
                   onSubmitPressed();

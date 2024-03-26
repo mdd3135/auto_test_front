@@ -1,6 +1,11 @@
 import 'dart:convert';
 
+import 'package:auto_test_front/entity/homework.dart';
+import 'package:auto_test_front/entity/itemBank.dart';
 import 'package:auto_test_front/entity/submit.dart';
+import 'package:auto_test_front/entity/submitAndResult.dart';
+import 'package:auto_test_front/page/completeHomeworkPage.dart';
+import 'package:auto_test_front/page/favoriteDetailPage.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -16,7 +21,7 @@ class SubmitPage extends StatefulWidget {
 }
 
 class _SubmitPageState extends State<SubmitPage> {
-  List<Submit> submitList = [];
+  List<SubmitAndResult> submitAndResultList = [];
   List<DataRow> dataRowList = [];
   List<bool> isSelectedList = [];
   int submitCount = 0;
@@ -160,7 +165,25 @@ class _SubmitPageState extends State<SubmitPage> {
       ),
       const DataColumn(
         label: Text(
+          "提交类型",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+      ),
+      const DataColumn(
+        label: Text(
           "提交时间",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+      ),
+      const DataColumn(
+        label: Text(
+          "操作",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -191,14 +214,14 @@ class _SubmitPageState extends State<SubmitPage> {
     totalPage = (submitCount / count).ceil();
     response = await http.get(
       Uri.parse(
-        "${Status.baseUrl}/getSubmitByUserId?"
+        "${Status.baseUrl}/getSubmitAndResultByUserId?"
         "count=$count&page=$currentPage&userId=${Status.user.id}",
       ),
     );
     var bodyObj = jsonDecode(utf8.decode(response.bodyBytes));
-    submitList.clear();
+    submitAndResultList.clear();
     for (Map<String, dynamic> map in bodyObj) {
-      submitList.add(Submit.objToSubmit(map));
+      submitAndResultList.add(SubmitAndResult.objToSubmit(map));
     }
     initSelectedList(false);
     isAllSelected = false;
@@ -208,17 +231,17 @@ class _SubmitPageState extends State<SubmitPage> {
 
   initSelectedList(bool value) {
     isSelectedList.clear();
-    for (int i = 0; i < submitList.length; i++) {
+    for (int i = 0; i < submitAndResultList.length; i++) {
       isSelectedList.add(value);
     }
   }
 
   initDataRowList() async {
     dataRowList.clear();
-    for (int i = 0; i < submitList.length; i++) {
-      Submit submit = submitList[i];
+    for (int i = 0; i < submitAndResultList.length; i++) {
+      SubmitAndResult submitAndResult = submitAndResultList[i];
       DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
-        int.parse(submit.createTime),
+        int.parse(submitAndResult.submit.createTime),
       );
       DataRow row = DataRow(
         selected: isSelectedList[i],
@@ -233,8 +256,25 @@ class _SubmitPageState extends State<SubmitPage> {
           ),
           DataCell(
             Text(
+              submitAndResult.submit.type == 0 ? "作业提交" : "题目提交",
+              style: MyTextStyle.textStyle,
+            ),
+          ),
+          DataCell(
+            Text(
               dateTime.toString().substring(0, 16),
               style: MyTextStyle.textStyle,
+            ),
+          ),
+          DataCell(
+            TextButton(
+              child: Text(
+                "查看详情",
+                style: MyTextStyle.textStyle,
+              ),
+              onPressed: () {
+                onDetailPressed(submitAndResult);
+              },
             ),
           ),
         ],
@@ -242,6 +282,51 @@ class _SubmitPageState extends State<SubmitPage> {
       dataRowList.add(row);
     }
     setState(() {});
+  }
+
+  onDetailPressed(SubmitAndResult submitAndResult) async {
+    BotToast.showLoading();
+    if (submitAndResult.submit.type == 0) {
+      var response = await http.get(
+        Uri.parse(
+          "${Status.baseUrl}/getHomeworkByHomeworkId?"
+          "id=${submitAndResult.submit.homeworkId}",
+        ),
+      );
+      var obj = jsonDecode(utf8.decode(response.bodyBytes));
+      Homework homework = Homework.objToHomework(obj);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) {
+            return CompleteHomeworkPage(
+              homework: homework,
+              isSubmited: 1,
+              resultList: submitAndResult.resultList,
+            );
+          },
+        ),
+      );
+    } else {
+      var response = await http.get(
+        Uri.parse(
+          "${Status.baseUrl}/getItemBankById?id=${submitAndResult.submit.itemId}",
+        ),
+      );
+      var obj = jsonDecode(utf8.decode(response.bodyBytes));
+      ItemBank itemBank = ItemBank.objToItemBank(obj);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) {
+            return FavoriteDetailPage(
+              itemBank: itemBank,
+              isSubmited: 1,
+              result: submitAndResult.resultList[0],
+            );
+          },
+        ),
+      );
+    }
+    BotToast.closeAllLoading();
   }
 
   allSelected(bool value) {

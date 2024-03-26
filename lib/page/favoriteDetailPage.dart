@@ -19,9 +19,16 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class FavoriteDetailPage extends StatefulWidget {
-  const FavoriteDetailPage({super.key, required this.itemBank});
+  const FavoriteDetailPage({
+    super.key,
+    required this.itemBank,
+    required this.isSubmited,
+    required this.result,
+  });
 
   final ItemBank itemBank;
+  final int isSubmited;
+  final Result result;
 
   @override
   State<FavoriteDetailPage> createState() => _FavoriteDetailPageState();
@@ -86,25 +93,27 @@ class _FavoriteDetailPageState extends State<FavoriteDetailPage> {
         const SizedBox(
           height: 20,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(
-              child: ElevatedButton(
-                onPressed: () {
-                  onSubmitPressed();
-                },
-                child: Text(
-                  "提交",
-                  style: MyTextStyle.textStyle,
+        if (isSubmited == 0)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: ElevatedButton(
+                  onPressed: () {
+                    onSubmitPressed();
+                  },
+                  child: Text(
+                    "提交",
+                    style: MyTextStyle.textStyle,
+                  ),
                 ),
-              ),
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 20,
-        ),
+              )
+            ],
+          ),
+        if (isSubmited == 0)
+          const SizedBox(
+            height: 20,
+          ),
         if (isSubmited == 1)
           Row(
             children: [
@@ -158,6 +167,10 @@ class _FavoriteDetailPageState extends State<FavoriteDetailPage> {
 
   initData() async {
     BotToast.showLoading();
+    isSubmited = widget.isSubmited;
+    if (isSubmited == 1) {
+      result = widget.result;
+    }
     if (widget.itemBank.type == 1) {
       var response = await http.get(
         Uri.parse(

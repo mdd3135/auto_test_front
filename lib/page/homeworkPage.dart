@@ -471,7 +471,11 @@ class _HomeworkPageState extends State<HomeworkPage> {
     }
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
-        return CompleteHomeworkPage(homework: homework);
+        return CompleteHomeworkPage(
+          homework: homework,
+          isSubmited: 0,
+          resultList: [],
+        );
       }),
     );
   }

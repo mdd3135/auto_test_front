@@ -134,7 +134,7 @@ class _CompleteShortAnswerState extends State<CompleteShortAnswer> {
       ),
       ShadowContainer(
         child: TextFormField(
-          maxLines: 10,
+          maxLines: 5,
           decoration: const InputDecoration(
             border: OutlineInputBorder(
               borderSide: BorderSide.none,

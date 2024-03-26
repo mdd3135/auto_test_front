@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_test_front/entity/itemBank.dart';
+import 'package:auto_test_front/entity/result.dart';
 import 'package:auto_test_front/page/favoriteDetailPage.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/myTextStyle.dart';
@@ -320,6 +321,8 @@ class _FavoritePageState extends State<FavoritePage> {
       MaterialPageRoute(builder: (context) {
         return FavoriteDetailPage(
           itemBank: itemBank,
+          isSubmited: 0,
+          result: Result(0, 0, 0, 0, ""),
         );
       }),
     ).then((value) {

@@ -220,7 +220,7 @@ class _CompleteProgramState extends State<CompleteProgram> {
       ),
       ShadowContainer(
         child: TextFormField(
-          maxLines: 10,
+          maxLines: 5,
           decoration: const InputDecoration(
             border: OutlineInputBorder(
               borderSide: BorderSide.none,
