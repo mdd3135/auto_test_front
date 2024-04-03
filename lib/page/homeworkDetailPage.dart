@@ -8,6 +8,7 @@ import 'package:auto_test_front/page/completionDetail.dart';
 import 'package:auto_test_front/page/programPage.dart';
 import 'package:auto_test_front/page/shortAnswerPage.dart';
 import 'package:auto_test_front/status.dart';
+import 'package:auto_test_front/widget/discussionWidget.dart';
 import 'package:auto_test_front/widget/myAppBar.dart';
 import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:auto_test_front/widget/shadowContainer.dart';
@@ -46,11 +47,21 @@ class _HomeworkDetailPageState extends State<HomeworkDetailPage> {
         children: [
           Positioned(
             top: 40,
-            child: Center(
-              child: SizedBox(
-                width: 400,
-                child: bodyDetail(),
-              ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 400,
+                  child: bodyDetail(),
+                ),
+                const SizedBox(width: 40),
+                SizedBox(
+                  width: 400,
+                  child: DiscussionWidget(
+                    homeworkId: widget.homework.id,
+                  ),
+                )
+              ],
             ),
           ),
           Positioned(
@@ -117,7 +128,7 @@ class _HomeworkDetailPageState extends State<HomeworkDetailPage> {
         const SizedBox(height: 20),
         ShadowContainer(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxHeight: 400),
+            constraints: const BoxConstraints(maxHeight: 600),
             child: ListView.builder(
               itemCount: itemBankList.length,
               itemBuilder: (context, index) {

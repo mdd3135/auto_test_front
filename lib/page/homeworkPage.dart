@@ -347,7 +347,7 @@ class _HomeworkPageState extends State<HomeworkPage> {
                     homeworkDetailPressed(homework);
                   },
                   child: Text(
-                    "查看作业",
+                    "作业详情",
                     style: MyTextStyle.textStyle,
                   ),
                 ),
