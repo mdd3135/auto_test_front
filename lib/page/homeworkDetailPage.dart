@@ -51,12 +51,12 @@ class _HomeworkDetailPageState extends State<HomeworkDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: 400,
+                  width: 600,
                   child: bodyDetail(),
                 ),
                 const SizedBox(width: 40),
                 SizedBox(
-                  width: 400,
+                  width: 600,
                   child: DiscussionWidget(
                     homeworkId: widget.homework.id,
                   ),
