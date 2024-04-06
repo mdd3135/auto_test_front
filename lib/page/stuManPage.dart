@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:auto_test_front/entity/scoreAnalysis.dart';
 import 'package:auto_test_front/entity/user.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/classroomModDialog.dart';
 import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:auto_test_front/widget/numberModDialog.dart';
 import 'package:auto_test_front/widget/resetPwdDialog.dart';
+import 'package:auto_test_front/widget/scoreAnalysisDialog.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:excel/excel.dart' as excel_lib;
 import 'package:file_picker/file_picker.dart';
@@ -347,7 +349,9 @@ class _StuManPageState extends State<StuManPage> {
           ),
           DataCell(
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                onAnalysisPressed(user.id);
+              },
               child: Text(
                 "查看",
                 style: MyTextStyle.textStyle,
@@ -602,5 +606,27 @@ class _StuManPageState extends State<StuManPage> {
       Uri.parse("${Status.baseUrl}/modClassroom"),
       body: {"name": name, "classroom": classroom},
     );
+  }
+
+  onAnalysisPressed(int userId) async {
+    BotToast.showLoading();
+    var response =
+        await http.get(Uri.parse("${Status.baseUrl}/getScoreAnalysis?"
+            "userId=$userId"));
+    List<dynamic> bodyObj = jsonDecode(utf8.decode(response.bodyBytes));
+    List<ScoreAnalysis> scoreAnalysisList = [];
+    for (int i = 0; i < bodyObj.length; i++) {
+      ScoreAnalysis scoreAnalysis =
+          ScoreAnalysis.objToScoreAnalysis(bodyObj[i]);
+      scoreAnalysisList.add(scoreAnalysis);
+    }
+    // ignore: use_build_context_synchronously
+    showDialog(
+      context: context,
+      builder: (context) {
+        return ScoreAnalysisDialog(scoreAnalysisList: scoreAnalysisList);
+      },
+    );
+    BotToast.closeAllLoading();
   }
 }

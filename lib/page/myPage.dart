@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:auto_test_front/entity/scoreAnalysis.dart';
 import 'package:auto_test_front/entity/user.dart';
 import 'package:auto_test_front/status.dart';
 import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:auto_test_front/widget/pwdModDialog.dart';
+import 'package:auto_test_front/widget/scoreAnalysisDialog.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +89,9 @@ class _MyPageState extends State<MyPage> {
                     child: Text(""),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      onAnalysisPressed();
+                    },
                     child: Text(
                       "查看",
                       style: MyTextStyle.textStyle,
@@ -169,6 +173,28 @@ class _MyPageState extends State<MyPage> {
       BotToast.showText(text: "修改密码成功，请重新登录");
       Status.login = false;
     }
+  }
+
+  onAnalysisPressed() async {
+    BotToast.showLoading();
+    var response =
+        await http.get(Uri.parse("${Status.baseUrl}/getScoreAnalysis?"
+            "userId=${Status.user.id}"));
+    List<dynamic> bodyObj = jsonDecode(utf8.decode(response.bodyBytes));
+    List<ScoreAnalysis> scoreAnalysisList = [];
+    for (int i = 0; i < bodyObj.length; i++) {
+      ScoreAnalysis scoreAnalysis =
+          ScoreAnalysis.objToScoreAnalysis(bodyObj[i]);
+      scoreAnalysisList.add(scoreAnalysis);
+    }
+    // ignore: use_build_context_synchronously
+    showDialog(
+      context: context,
+      builder: (context) {
+        return ScoreAnalysisDialog(scoreAnalysisList: scoreAnalysisList);
+      },
+    );
+    BotToast.closeAllLoading();
   }
 
   onLogout() {
