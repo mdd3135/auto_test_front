@@ -191,7 +191,10 @@ class _MyPageState extends State<MyPage> {
     showDialog(
       context: context,
       builder: (context) {
-        return ScoreAnalysisDialog(scoreAnalysisList: scoreAnalysisList);
+        return ScoreAnalysisDialog(
+          scoreAnalysisList: scoreAnalysisList,
+          userName: Status.user.name,
+        );
       },
     );
     BotToast.closeAllLoading();

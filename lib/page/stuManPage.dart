@@ -350,7 +350,7 @@ class _StuManPageState extends State<StuManPage> {
           DataCell(
             TextButton(
               onPressed: () {
-                onAnalysisPressed(user.id);
+                onAnalysisPressed(user);
               },
               child: Text(
                 "查看",
@@ -608,11 +608,11 @@ class _StuManPageState extends State<StuManPage> {
     );
   }
 
-  onAnalysisPressed(int userId) async {
+  onAnalysisPressed(User user) async {
     BotToast.showLoading();
     var response =
         await http.get(Uri.parse("${Status.baseUrl}/getScoreAnalysis?"
-            "userId=$userId"));
+            "userId=${user.id}"));
     List<dynamic> bodyObj = jsonDecode(utf8.decode(response.bodyBytes));
     List<ScoreAnalysis> scoreAnalysisList = [];
     for (int i = 0; i < bodyObj.length; i++) {
@@ -624,7 +624,10 @@ class _StuManPageState extends State<StuManPage> {
     showDialog(
       context: context,
       builder: (context) {
-        return ScoreAnalysisDialog(scoreAnalysisList: scoreAnalysisList);
+        return ScoreAnalysisDialog(
+          scoreAnalysisList: scoreAnalysisList,
+          userName: user.name,
+        );
       },
     );
     BotToast.closeAllLoading();

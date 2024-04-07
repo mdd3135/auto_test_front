@@ -3,9 +3,14 @@ import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:flutter/material.dart';
 
 class ScoreAnalysisDialog extends StatefulWidget {
-  const ScoreAnalysisDialog({super.key, required this.scoreAnalysisList});
+  const ScoreAnalysisDialog({
+    super.key,
+    required this.scoreAnalysisList,
+    required this.userName,
+  });
 
   final List<ScoreAnalysis> scoreAnalysisList;
+  final String userName;
 
   @override
   State<ScoreAnalysisDialog> createState() => _ScoreAnalysisDialogState();
@@ -70,9 +75,9 @@ class _ScoreAnalysisDialogState extends State<ScoreAnalysisDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text(
-        "成绩分析",
-        style: TextStyle(fontWeight: FontWeight.w500),
+      title: Text(
+        "${widget.userName}的成绩分析",
+        style: const TextStyle(fontWeight: FontWeight.w500),
       ),
       content: Container(
         padding: const EdgeInsets.only(top: 20),
