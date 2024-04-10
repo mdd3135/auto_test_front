@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:auto_test_front/entity/homework.dart';
+import 'package:auto_test_front/entity/scoreAnalysis.dart';
 import 'package:auto_test_front/page/addHomeworkPage.dart';
 import 'package:auto_test_front/page/completeHomeworkPage.dart';
 import 'package:auto_test_front/page/homeworkDetailPage.dart';
 import 'package:auto_test_front/status.dart';
+import 'package:auto_test_front/widget/homeworkAnalysisDialog.dart';
 import 'package:auto_test_front/widget/myTextStyle.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
@@ -353,7 +355,9 @@ class _HomeworkPageState extends State<HomeworkPage> {
                 ),
                 if (Status.user.type == 1)
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      onHomeworkAnalysisPressed(homework.id);
+                    },
                     child: Text(
                       "作业统计",
                       style: MyTextStyle.textStyle,
@@ -474,10 +478,34 @@ class _HomeworkPageState extends State<HomeworkPage> {
         return CompleteHomeworkPage(
           homework: homework,
           isSubmited: 0,
-          resultList: [],
+          resultList: const [],
         );
       }),
     );
+  }
+
+  onHomeworkAnalysisPressed(int homeworkId) async {
+    BotToast.showLoading();
+    var response = await http.get(
+      Uri.parse(
+        "${Status.baseUrl}/getHomeworkAnalysis?homeworkId=$homeworkId",
+      ),
+    );
+    List<dynamic> bodyList = jsonDecode(utf8.decode(response.bodyBytes));
+    List<ScoreAnalysis> scoreAnalysisList = [];
+    for (int i = 0; i < bodyList.length; i++) {
+      ScoreAnalysis scoreAnalysis =
+          ScoreAnalysis.objToScoreAnalysis(bodyList[i]);
+      scoreAnalysisList.add(scoreAnalysis);
+    }
+    // ignore: use_build_context_synchronously
+    showDialog(
+      context: context,
+      builder: (context) {
+        return HomeworkAnalysisDialog(scoreAnalysisList: scoreAnalysisList);
+      },
+    );
+    BotToast.closeAllLoading();
   }
 
   changeCountId(int? value) {
