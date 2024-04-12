@@ -11,10 +11,15 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class CompleteCompletion extends StatefulWidget {
-  const CompleteCompletion(
-      {super.key, required this.itemBank, required this.idx});
+  const CompleteCompletion({
+    super.key,
+    required this.itemBank,
+    required this.idx,
+    required this.isSubmited,
+  });
   final ItemBank itemBank;
   final int idx;
+  final int isSubmited;
 
   @override
   State<CompleteCompletion> createState() => _CompleteCompletionState();
@@ -113,49 +118,52 @@ class _CompleteCompletionState extends State<CompleteCompletion> {
       ),
     ];
     List<dynamic> answerList = jsonDecode(completion.answer);
-    for (int i = 0; i < answerList.length; i++) {
-      String answer = answerList[i];
-      controllerList.add(
-        TextEditingController(text: answer),
-      );
-      columns.addAll(
-        [
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Text(
-                "第${i + 1}空答案",
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          ShadowContainer(
-            child: TextFormField(
-              maxLines: 1,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  gapPadding: 0,
-                ),
-              ),
-              style: MyTextStyle.textStyle,
-              controller: controllerList[i],
-              onChanged: (value) {
-                updateAnswer(i, value);
-              },
+    if (widget.isSubmited == 0) {
+      for (int i = 0; i < answerList.length; i++) {
+        String answer = answerList[i];
+        controllerList.add(
+          TextEditingController(text: answer),
+        );
+        columns.addAll(
+          [
+            const SizedBox(
+              height: 20,
             ),
-          ),
-        ],
-      );
+            Row(
+              children: [
+                Text(
+                  "第${i + 1}空答案",
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            ShadowContainer(
+              child: TextFormField(
+                maxLines: 1,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    gapPadding: 0,
+                  ),
+                ),
+                style: MyTextStyle.textStyle,
+                controller: controllerList[i],
+                onChanged: (value) {
+                  updateAnswer(i, value);
+                },
+              ),
+            ),
+          ],
+        );
+      }
     }
+
     return Column(
       children: columns,
     );

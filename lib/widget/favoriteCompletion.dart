@@ -10,10 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class FavoriteCompletion extends StatefulWidget {
-  const FavoriteCompletion(
-      {super.key, required this.completion, required this.itemBank});
+  const FavoriteCompletion({
+    super.key,
+    required this.completion,
+    required this.itemBank,
+    required this.isSubmited,
+  });
   final Completion completion;
   final ItemBank itemBank;
+  final int isSubmited;
 
   @override
   State<FavoriteCompletion> createState() => _FavoriteCompletionState();
@@ -106,6 +111,9 @@ class _FavoriteCompletionState extends State<FavoriteCompletion> {
     ];
     List<dynamic> answerList = jsonDecode(completion.answer);
     for (int i = 0; i < answerList.length; i++) {
+      if (widget.isSubmited == 1) {
+        break;
+      }
       columns.addAll(
         [
           const SizedBox(

@@ -79,16 +79,19 @@ class _FavoriteDetailPageState extends State<FavoriteDetailPage> {
           FavoriteCompletion(
             completion: completion,
             itemBank: widget.itemBank,
+            isSubmited: isSubmited,
           )
         else if (widget.itemBank.type == 3)
           FavoriteShortAnswer(
             shortAnswer: shortAnswer,
             itemBank: widget.itemBank,
+            isSubmited: isSubmited,
           )
         else
           FavoriteProgram(
             program: program,
             itemBank: widget.itemBank,
+            isSubmited: isSubmited,
           ),
         const SizedBox(
           height: 20,

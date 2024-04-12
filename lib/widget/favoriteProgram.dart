@@ -10,11 +10,16 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class FavoriteProgram extends StatefulWidget {
-  const FavoriteProgram(
-      {super.key, required this.program, required this.itemBank});
+  const FavoriteProgram({
+    super.key,
+    required this.program,
+    required this.itemBank,
+    required this.isSubmited,
+  });
 
   final Program program;
   final ItemBank itemBank;
+  final int isSubmited;
 
   @override
   State<FavoriteProgram> createState() => _FavoriteProgramState();
@@ -138,6 +143,9 @@ class _FavoriteProgramState extends State<FavoriteProgram> {
     List<dynamic> input = jsonDecode(program.input);
     List<dynamic> output = jsonDecode(program.output);
     for (int i = 0; i < input.length; i++) {
+      if (widget.isSubmited == 1) {
+        break;
+      }
       columns.addAll([
         Row(
           children: [

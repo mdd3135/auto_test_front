@@ -8,11 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class FavoriteShortAnswer extends StatefulWidget {
-  const FavoriteShortAnswer(
-      {super.key, required this.shortAnswer, required this.itemBank});
+  const FavoriteShortAnswer({
+    super.key,
+    required this.shortAnswer,
+    required this.itemBank,
+    required this.isSubmited,
+  });
 
   final ShortAnswer shortAnswer;
   final ItemBank itemBank;
+  final int isSubmited;
 
   @override
   State<FavoriteShortAnswer> createState() => _FavoriteShortAnswerState();
@@ -117,33 +122,37 @@ class _FavoriteShortAnswerState extends State<FavoriteShortAnswer> {
       const SizedBox(
         height: 20,
       ),
-      Row(
-        children: [
-          Text(
-            "题目答案：",
-            style: MyTextStyle.textStyle,
-          ),
-        ],
-      ),
-      const SizedBox(
-        height: 5,
-      ),
-      ShadowContainer(
-        child: TextFormField(
-          maxLines: 5,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              gapPadding: 0,
-            ),
-          ),
-          style: MyTextStyle.textStyle,
-          onChanged: (value) {
-            updateAnswer(value);
-          },
-        ),
-      ),
     ];
+    if (widget.isSubmited == 0) {
+      columns.addAll([
+        Row(
+          children: [
+            Text(
+              "题目答案：",
+              style: MyTextStyle.textStyle,
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        ShadowContainer(
+          child: TextFormField(
+            maxLines: 5,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                gapPadding: 0,
+              ),
+            ),
+            style: MyTextStyle.textStyle,
+            onChanged: (value) {
+              updateAnswer(value);
+            },
+          ),
+        ),
+      ]);
+    }
     return Column(
       children: columns,
     );

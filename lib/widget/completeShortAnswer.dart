@@ -11,11 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class CompleteShortAnswer extends StatefulWidget {
-  const CompleteShortAnswer(
-      {super.key, required this.itemBank, required this.idx});
+  const CompleteShortAnswer({
+    super.key,
+    required this.itemBank,
+    required this.idx,
+    required this.isSubmited,
+  });
 
   final ItemBank itemBank;
   final int idx;
+  final int isSubmited;
 
   @override
   State<CompleteShortAnswer> createState() => _CompleteShortAnswerState();
@@ -121,34 +126,38 @@ class _CompleteShortAnswerState extends State<CompleteShortAnswer> {
       const SizedBox(
         height: 20,
       ),
-      Row(
-        children: [
-          Text(
-            "题目答案：",
-            style: MyTextStyle.textStyle,
-          ),
-        ],
-      ),
-      const SizedBox(
-        height: 5,
-      ),
-      ShadowContainer(
-        child: TextFormField(
-          maxLines: 5,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              gapPadding: 0,
-            ),
-          ),
-          style: MyTextStyle.textStyle,
-          controller: controller,
-          onChanged: (value) {
-            updateAnswer(value);
-          },
-        ),
-      ),
     ];
+    if (widget.isSubmited == 0) {
+      columns.addAll([
+        Row(
+          children: [
+            Text(
+              "题目答案：",
+              style: MyTextStyle.textStyle,
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        ShadowContainer(
+          child: TextFormField(
+            maxLines: 5,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                gapPadding: 0,
+              ),
+            ),
+            style: MyTextStyle.textStyle,
+            controller: controller,
+            onChanged: (value) {
+              updateAnswer(value);
+            },
+          ),
+        ),
+      ]);
+    }
     return Column(
       children: columns,
     );

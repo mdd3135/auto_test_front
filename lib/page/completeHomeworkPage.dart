@@ -164,16 +164,19 @@ class _CompleteHomeworkPageState extends State<CompleteHomeworkPage> {
           CompleteCompletion(
             itemBank: itemBank,
             idx: currentItem - 1,
+            isSubmited: isSubmited,
           )
         else if (itemBank.type == 3)
           CompleteShortAnswer(
             itemBank: itemBank,
             idx: currentItem - 1,
+            isSubmited: isSubmited,
           )
         else
           CompleteProgram(
             itemBank: itemBank,
             idx: currentItem - 1,
+            isSubmited: isSubmited,
           ),
         const SizedBox(height: 20),
         if (isSubmited == 1)

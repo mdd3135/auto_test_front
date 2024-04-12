@@ -11,10 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class CompleteProgram extends StatefulWidget {
-  const CompleteProgram({super.key, required this.itemBank, required this.idx});
+  const CompleteProgram({
+    super.key,
+    required this.itemBank,
+    required this.idx,
+    required this.isSubmited,
+  });
 
   final ItemBank itemBank;
   final int idx;
+  final int isSubmited;
 
   @override
   State<CompleteProgram> createState() => _CompleteProgramState();
@@ -203,42 +209,44 @@ class _CompleteProgramState extends State<CompleteProgram> {
         )
       ]);
     }
-    columns.addAll([
-      const Row(
-        children: [
-          Text(
-            "题目答案：",
-            style: TextStyle(
+    if (widget.isSubmited == 0) {
+      columns.addAll([
+        const Row(
+          children: [
+            Text(
+              "题目答案：",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        ShadowContainer(
+          child: TextFormField(
+            maxLines: 5,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                gapPadding: 0,
+              ),
+            ),
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w500,
+              fontFamily: "mono",
             ),
+            controller: controller,
+            onChanged: (value) {
+              updateAnswer(value);
+            },
           ),
-        ],
-      ),
-      const SizedBox(
-        height: 5,
-      ),
-      ShadowContainer(
-        child: TextFormField(
-          maxLines: 5,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              gapPadding: 0,
-            ),
-          ),
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            fontFamily: "mono",
-          ),
-          controller: controller,
-          onChanged: (value) {
-            updateAnswer(value);
-          },
         ),
-      ),
-    ]);
+      ]);
+    }
     return Column(
       children: columns,
     );
