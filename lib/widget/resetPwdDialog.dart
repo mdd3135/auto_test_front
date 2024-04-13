@@ -19,7 +19,7 @@ class _ResetPwdDialogState extends State<ResetPwdDialog> {
         ),
       ),
       content: Text(
-        "是否要重置该学生密码",
+        "是否要重置该学生密码为学号",
         style: MyTextStyle.textStyle,
       ),
       actions: [
