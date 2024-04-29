@@ -64,21 +64,6 @@ class _HomeworkDetailPageState extends State<HomeworkDetailPage> {
               ],
             ),
           ),
-          Positioned(
-            bottom: 40,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  "确认",
-                  style: MyTextStyle.textStyle,
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );
